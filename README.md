@@ -7,21 +7,20 @@ Quick Start
 -----------
 First, install the knuverse-sdk:
 
-.. code-block:: sh
-
-    $ pip install knuverse
-
+```sh
+$ pip install knuverse
+```
 Then, in a Python file:
 
-.. code-block:: python
+```python
+from knuverse.knufactor import Knufactor
 
-    from knuverse.knufactor import Knufactor
-
-    api = Knufactor(
-        "https://cloud.knuverse.com",
-        username="<username>",
-        password="<password>",
-        account="<account_id>"
-    )
-    for client in api.get_clients():
-        print "%s: %s" % (client.get("name"), client.get("state")),
+api = Knufactor(
+    "https://cloud.knuverse.com",
+    username="<username>",
+    password="<password>",
+    account="<account_id>"
+)
+for client in api.get_clients():
+    print "%s: %s" % (client.get("name"), client.get("state")),
+```
