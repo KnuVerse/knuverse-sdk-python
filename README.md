@@ -1,6 +1,6 @@
 # knuverse-sdk-python
 
-This project is a Python SDK that allows developers to create apps that use Knuverse's Cloud APIs.
+This project is a Python SDK that allows developers to create apps that use Knuverse's Cloud APIs. *Coming Soon!*
 You can find the documentation at https://cloud.knuverse.com/docs/
 
 Quick Start
