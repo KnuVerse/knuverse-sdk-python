@@ -85,7 +85,7 @@ class Knufactor:
         self._headers = {
             "Accept": "application/json",
         }
-        self.version = "1.0.3"
+        self.version = "1.0.2"
 
     # Private Methods
     # ###############
@@ -818,6 +818,7 @@ class Knufactor:
     def start_verification(
         self,
         client,
+        mode=None,
         verification_speed=None,
         row_doubling="off",
         phone_number=None,
@@ -837,8 +838,11 @@ class Knufactor:
 
         data = {
             "name": client,
-            "user": "Knuverse-SDK-Python-v%s" % self.version
+            "user_agent": "knuverse-sdk-python-v%s" % self.version
         }
+        if mode:
+            data["mode"] = mode
+
         if phone_number:
             data["phone_number"] = phone_number
 
