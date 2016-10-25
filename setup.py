@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='knuverse',
-    version='1.0.2',
+    version='1.0.3',
     description='A Python SDK for interfacing with KnuVerse Cloud APIs',
     long_description=open('README.md').read(),
     url='https://github.com/KnuVerse/knuverse-sdk-python',
@@ -21,6 +21,10 @@ setup(
         # that you indicate whether you support Python 2, Python 3 or both.
 
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
     keywords='api sdk knuverse cloud voice authentication audiopin audiopass',
 

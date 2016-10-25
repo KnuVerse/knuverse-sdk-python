@@ -6,11 +6,10 @@ import os
 import re
 import json
 import requests
-import httplib
 from functools import wraps
 from datetime import datetime, timedelta
 
-from data import url
+from .data import url
 requests.packages.urllib3.disable_warnings()
 
 
@@ -85,7 +84,7 @@ class Knufactor:
         self._headers = {
             "Accept": "application/json",
         }
-        self.version = "1.0.2"
+        self.version = "1.0.3"
 
     # Private Methods
     # ###############
@@ -188,16 +187,16 @@ class Knufactor:
         if response_code < 400:
             raise UnexpectedResponseCodeException(response.text)
 
-        elif response_code == httplib.UNAUTHORIZED:
+        elif response_code == 401:
             raise UnauthorizedException(response.text)
 
-        elif response_code == httplib.BAD_REQUEST:
+        elif response_code == 400:
             raise BadRequestException(response.text)
 
-        elif response_code == httplib.FORBIDDEN:
+        elif response_code == 403:
             raise ForbiddenException(response.text)
 
-        elif response_code == httplib.NOT_FOUND:
+        elif response_code == 404:
             raise NotFoundException(response.text)
 
         else:
@@ -245,7 +244,7 @@ class Knufactor:
             })
         response = self._post(url.auth, body=body)
 
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response).get("jwt")
 
     # Client interfaces
@@ -266,7 +265,7 @@ class Knufactor:
             "password": password
         }
         response = self._post(url.clients, body=body)
-        self._check_response(response, httplib.CREATED)
+        self._check_response(response, 201)
         return self._create_response(response).get("client_id")
 
     @_auth
@@ -278,7 +277,7 @@ class Knufactor:
         Returns: (int) Number of clients
         """
         response = self._head(url.clients)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return int(response.headers.get("x-client-count", -1))
 
     @_auth
@@ -300,7 +299,7 @@ class Knufactor:
 
         response = self._get(url.clients, params=params)
 
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         if name:
             return response.json()
         return self._create_response(response).get("clients")
@@ -321,7 +320,7 @@ class Knufactor:
         }
 
         response = self._get(url.clients, params=params)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response).get("client_id")
 
     @_auth
@@ -336,7 +335,7 @@ class Knufactor:
         """
         client = self._get_client_id(client)
         response = self._get(url.clients_id.format(id=client))
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)
 
     @_auth
@@ -356,7 +355,7 @@ class Knufactor:
         }
 
         response = self._put(url.clients_id.format(id=client), body=body)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
 
     @_auth
     def validate_pin(self, client, pin):
@@ -375,7 +374,7 @@ class Knufactor:
         }
 
         response = self._put(url.clients_id.format(id=client), body=body)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
 
     @_auth
     def update_client_info(self,
@@ -452,7 +451,7 @@ class Knufactor:
             body["role_rationale"] = role_rationale
 
         response = self._put(url.clients_id.format(id=client), body=body)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
 
     @_auth
     def remove_client(self, client):
@@ -464,7 +463,7 @@ class Knufactor:
         """
         client = self._get_client_id(client)
         response = self._delete(url.clients_id.format(id=client))
-        self._check_response(response, httplib.NO_CONTENT)
+        self._check_response(response, 204)
 
     # Enrollment interfaces
     #######################
@@ -485,7 +484,7 @@ class Knufactor:
             params["audio"] = True
 
         response = self._get(url.enrollments_id.format(id=client), params=params)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)
 
     @_auth
@@ -514,7 +513,7 @@ class Knufactor:
             data["phone_number"] = phone_number
 
         response = self._post(url.enrollments, body=data)
-        self._check_response(response, httplib.CREATED)
+        self._check_response(response, 201)
         return self._create_response(response)
 
     @_auth
@@ -554,7 +553,7 @@ class Knufactor:
             }
 
         response = self._put(url.enrollments_id.format(id=enrollment_id), files=files)
-        self._check_response(response, httplib.ACCEPTED)
+        self._check_response(response, 202)
 
     # Event interfaces
     # ================
@@ -572,7 +571,7 @@ class Knufactor:
         # TODO Add paging to this
         client = self._get_client_id(client)
         response = self._get(url.events_clients_id.format(id=client))
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response).get("events")
 
     @_auth
@@ -585,7 +584,7 @@ class Knufactor:
         """
         # TODO Add paging to this
         response = self._get(url.events_clients)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response).get("events")
 
     @_auth
@@ -610,7 +609,7 @@ class Knufactor:
         """
         # TODO Add paging to this
         response = self._get(url.events_system)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response).get("events")
 
     # General interfaces
@@ -623,7 +622,7 @@ class Knufactor:
         return: (dict) Server info
         """
         response = self._get(url.about)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)
 
     @_auth
@@ -635,7 +634,7 @@ class Knufactor:
         returns: (dict) Server status
         """
         response = self._get(url.status)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)
 
     @_auth
@@ -647,7 +646,7 @@ class Knufactor:
         returns: (dict) Server messages and warnings
         """
         response = self._get(url.status_warnings)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)
 
     # System Modules interfaces
@@ -661,7 +660,7 @@ class Knufactor:
         return: (dict) module settings
         """
         response = self._get(url.settings_modules)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)
 
     @_auth
@@ -699,7 +698,7 @@ class Knufactor:
             body["mode_default"] = mode_default
 
         response = self._put(url.settings_modules, body=body)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
 
     @_auth
     def reset_module_settings(self):
@@ -712,7 +711,7 @@ class Knufactor:
         }
 
         response = self._delete(url.settings_modules, body=data)
-        self._check_response(response, httplib.NO_CONTENT)
+        self._check_response(response, 204)
 
     # Report generation interfaces
     ##############################
@@ -747,7 +746,7 @@ class Knufactor:
         }
         endpoint = url.reports_events_clients if type == "clients" else url.reports_events_system
         response = self._get(endpoint, params=params)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response).get("events")
 
     @_auth
@@ -768,7 +767,7 @@ class Knufactor:
             "end_date": end_str
         }
         response = self._get(url.reports_verifications, params=params)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)
 
     # System Settings interfaces
@@ -782,7 +781,7 @@ class Knufactor:
         return: (dict) System settings
         """
         response = self._get(url.settings_system)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)
 
     @_auth
@@ -796,7 +795,7 @@ class Knufactor:
         data["auth_password"] = self._password
 
         response = self._put(url.settings_system, body=data)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
 
     @_auth
     def reset_system_settings(self):
@@ -809,7 +808,7 @@ class Knufactor:
         }
 
         response = self._delete(url.settings_system, body=data)
-        self._check_response(response, httplib.NO_CONTENT)
+        self._check_response(response, 204)
 
     # Verification interfaces
     #########################
@@ -853,7 +852,7 @@ class Knufactor:
             data["row_doubling"] = row_doubling
 
         response = self._post(url.verifications, body=data)
-        self._check_response(response, httplib.CREATED)
+        self._check_response(response, 201)
         return self._create_response(response)
 
     @_auth
@@ -899,7 +898,7 @@ class Knufactor:
         elif recording_start:
             files["recording_start"] = recording_start
         response = self._put(url.verifications_id.format(id=resource), files=files)
-        self._check_response(response, httplib.ACCEPTED)
+        self._check_response(response, 202)
         return self._create_response(response)
 
     @_auth
@@ -918,7 +917,7 @@ class Knufactor:
         }
 
         response = self._put(url.verifications_id.format(id=resource), body=data)
-        self._check_response(response, httplib.ACCEPTED)
+        self._check_response(response, 202)
 
     @_auth
     def remove_verification_resource(self, resource):
@@ -929,7 +928,7 @@ class Knufactor:
             resource: (str) Verification ID
         """
         response = self._delete(url.verifications_id.format(id=resource))
-        self._check_response(response, httplib.NO_CONTENT)
+        self._check_response(response, 204)
 
     @_auth
     def get_verifications_count(self):
@@ -939,7 +938,7 @@ class Knufactor:
         return: (int) Number of verifications
         """
         response = self._head(url.verifications)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return int(response.headers.get('x-verification-count', -1))
 
     @_auth
@@ -954,7 +953,7 @@ class Knufactor:
         params["limit"] = limit
 
         response = self._get(url.verifications, params=params)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response).get("verifications")
 
     @_auth
@@ -972,5 +971,5 @@ class Knufactor:
             params["audio"] = True
 
         response = self._get(url.verifications_id.format(id=resource), params=params)
-        self._check_response(response, httplib.OK)
+        self._check_response(response, 200)
         return self._create_response(response)

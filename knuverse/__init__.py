@@ -1,1 +1,1 @@
-from knufactor import *
+from .knufactor import *
