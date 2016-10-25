@@ -1,0 +1,241 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: class Knufactor</title>
+</head><body bgcolor="#f0f0f8">
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><strong>knuverse.knufactor.Knufactor</strong> = <a name="knuverse.knufactor.Knufactor">class Knufactor</a></font></td></tr>
+    
+<tr><td bgcolor="#ffc8d8"><tt>&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Knufactor-__init__"><strong>__init__</strong></a>(self, server, username<font color="#909090">=None</font>, password<font color="#909090">=None</font>, account<font color="#909090">=None</font>, noauth<font color="#909090">=False</font>, base_uri<font color="#909090">='/api/v1/'</font>)</dt></dl>
+
+<dl><dt><a name="Knufactor-about"><strong>about</strong></a>(self)</dt><dd><tt>Get&nbsp;server&nbsp;info.<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/about&nbsp;interface<br>
+&nbsp;<br>
+return:&nbsp;(dict)&nbsp;Server&nbsp;info</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-cancel_verification_resource"><strong>cancel_verification_resource</strong></a>(self, *args, **kwargs)</dt><dd><tt>Cancels&nbsp;a&nbsp;started&nbsp;verification<br>
+Uses&nbsp;PUT&nbsp;to&nbsp;/verifications/&lt;resource&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;(str)&nbsp;Verification&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;reason:&nbsp;(str)&nbsp;Reason&nbsp;for&nbsp;cancelling&nbsp;the&nbsp;verification</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-create_client"><strong>create_client</strong></a>(self, *args, **kwargs)</dt><dd><tt>Create&nbsp;a&nbsp;new&nbsp;client<br>
+Uses&nbsp;the&nbsp;POST&nbsp;to&nbsp;/clients&nbsp;interface<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;(str)&nbsp;Name&nbsp;of&nbsp;client<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password:&nbsp;(str)&nbsp;password&nbsp;of&nbsp;client<br>
+Returns:&nbsp;(str)&nbsp;ID&nbsp;of&nbsp;the&nbsp;newly&nbsp;created&nbsp;client.</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-create_event_report"><strong>create_event_report</strong></a>(self, *args, **kwargs)</dt><dd><tt>Create&nbsp;a&nbsp;report&nbsp;for&nbsp;all&nbsp;client&nbsp;events&nbsp;or&nbsp;all&nbsp;system&nbsp;events<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/reports/events/{clients,system}&nbsp;interface<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start_date:&nbsp;(datetime)&nbsp;Start&nbsp;time&nbsp;for&nbsp;report&nbsp;generation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end_date:&nbsp;(datetime)&nbsp;End&nbsp;time&nbsp;for&nbsp;report&nbsp;generation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;(str)&nbsp;Type&nbsp;of&nbsp;event&nbsp;report&nbsp;to&nbsp;create.&nbsp;"system"&nbsp;or&nbsp;"clients"<br>
+&nbsp;<br>
+Returns:&nbsp;(list)&nbsp;List&nbsp;of&nbsp;events&nbsp;in&nbsp;the&nbsp;input&nbsp;range</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-create_verification_report"><strong>create_verification_report</strong></a>(self, *args, **kwargs)</dt><dd><tt>Create&nbsp;a&nbsp;report&nbsp;for&nbsp;all&nbsp;verifications<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/reports/verifications&nbsp;interface<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;start_date:&nbsp;(datetime)&nbsp;Start&nbsp;time&nbsp;for&nbsp;report&nbsp;generation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;end_date:&nbsp;(datetime)&nbsp;End&nbsp;time&nbsp;for&nbsp;report&nbsp;generation<br>
+&nbsp;<br>
+Returns:&nbsp;(str)&nbsp;CSV&nbsp;formatted&nbsp;report&nbsp;string</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_all_client_events"><strong>get_all_client_events</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;all&nbsp;client&nbsp;events<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/events/clients&nbsp;interface<br>
+&nbsp;<br>
+Returns:&nbsp;(list)&nbsp;Events</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_all_login_events"><strong>get_all_login_events</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;all&nbsp;login&nbsp;events<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/events/login&nbsp;interface<br>
+&nbsp;<br>
+Returns:&nbsp;(list)&nbsp;Events</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_all_system_events"><strong>get_all_system_events</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;all&nbsp;system&nbsp;events<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/events/system&nbsp;interface<br>
+&nbsp;<br>
+Returns:&nbsp;(list)&nbsp;Events</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_authorization_bearer"><strong>get_authorization_bearer</strong></a>(self, username<font color="#909090">=None</font>, password<font color="#909090">=None</font>, account<font color="#909090">=None</font>)</dt><dd><tt>Get&nbsp;authentication&nbsp;token.<br>
+Uses&nbsp;POST&nbsp;to&nbsp;/auth&nbsp;interface<br>
+&nbsp;<br>
+return:&nbsp;Authentication&nbsp;JWT</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_client_count"><strong>get_client_count</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;number&nbsp;of&nbsp;clients<br>
+Uses&nbsp;HEAD&nbsp;to&nbsp;/clients&nbsp;interface<br>
+&nbsp;<br>
+Returns:&nbsp;(int)&nbsp;Number&nbsp;of&nbsp;clients</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_client_events"><strong>get_client_events</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;a&nbsp;client's&nbsp;events<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/events/clients/&lt;client&gt;&nbsp;interface<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;Client's&nbsp;ID<br>
+&nbsp;<br>
+Returns:&nbsp;(list)&nbsp;Events</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_client_id"><strong>get_client_id</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;a&nbsp;client's&nbsp;ID<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/clients?name=&lt;client&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;name<br>
+&nbsp;<br>
+return:&nbsp;(str)&nbsp;Client&nbsp;id</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_client_info"><strong>get_client_info</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;client&nbsp;info<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/clients/&lt;client&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;ID<br>
+&nbsp;<br>
+return&nbsp;(dict)&nbsp;Client&nbsp;dictionary</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_clients"><strong>get_clients</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;list&nbsp;of&nbsp;clients.<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/clients&nbsp;interface.<br>
+&nbsp;<br>
+return:&nbsp;(list)&nbsp;List&nbsp;of&nbsp;clients.</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_enrollment_resource"><strong>get_enrollment_resource</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;Client&nbsp;Enrollment&nbsp;Data.<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/enrollments/&lt;client&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;audio:&nbsp;(boolean)&nbsp;If&nbsp;True&nbsp;then&nbsp;the&nbsp;enrollment&nbsp;audio&nbsp;is&nbsp;returned.<br>
+return:&nbsp;(dict)</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_module_settings"><strong>get_module_settings</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;Module&nbsp;settings.<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/settings/modules&nbsp;interface<br>
+return:&nbsp;(dict)&nbsp;module&nbsp;settings</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_system_settings"><strong>get_system_settings</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;system&nbsp;settings.<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/settings/system&nbsp;interface<br>
+return:&nbsp;(dict)&nbsp;System&nbsp;settings</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_verification_resource"><strong>get_verification_resource</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;Verification&nbsp;Resource.<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/verifications/&lt;resource&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;(str)&nbsp;Verification&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;audio:&nbsp;(boolean)&nbsp;If&nbsp;True,&nbsp;audio&nbsp;data&nbsp;associated&nbsp;with&nbsp;verification&nbsp;will&nbsp;be&nbsp;returned.<br>
+return:&nbsp;(dict)&nbsp;Verification&nbsp;data</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_verifications"><strong>get_verifications</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;list&nbsp;of&nbsp;verifications.<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/verifications&nbsp;interface<br>
+return:&nbsp;(list)&nbsp;verification&nbsp;list</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-get_verifications_count"><strong>get_verifications_count</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;Verification&nbsp;Count.<br>
+Uses&nbsp;HEAD&nbsp;to&nbsp;/verifications&nbsp;interface<br>
+return:&nbsp;(int)&nbsp;Number&nbsp;of&nbsp;verifications</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-refresh_auth"><strong>refresh_auth</strong></a>(self, username<font color="#909090">=None</font>, password<font color="#909090">=None</font>, account<font color="#909090">=None</font>)</dt><dd><tt>Renew&nbsp;authentication&nbsp;token&nbsp;manually.<br>
+Uses&nbsp;POST&nbsp;to&nbsp;/auth&nbsp;interface</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-remove_client"><strong>remove_client</strong></a>(self, *args, **kwargs)</dt><dd><tt>Remove&nbsp;a&nbsp;client<br>
+Uses&nbsp;DELETE&nbsp;to&nbsp;/clients/&lt;client&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;ID</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-remove_verification_resource"><strong>remove_verification_resource</strong></a>(self, *args, **kwargs)</dt><dd><tt>Remove&nbsp;verification<br>
+Uses&nbsp;DELETE&nbsp;to&nbsp;/verifications/&lt;resource&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;(str)&nbsp;Verification&nbsp;ID</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-reset_module_settings"><strong>reset_module_settings</strong></a>(self, *args, **kwargs)</dt><dd><tt>Resets&nbsp;the&nbsp;module&nbsp;settings&nbsp;back&nbsp;to&nbsp;default.<br>
+Uses&nbsp;DELETE&nbsp;to&nbsp;/settings/modules&nbsp;interface</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-reset_system_settings"><strong>reset_system_settings</strong></a>(self, *args, **kwargs)</dt><dd><tt>Resets&nbsp;the&nbsp;system&nbsp;settings&nbsp;back&nbsp;to&nbsp;default.<br>
+Uses&nbsp;DELETE&nbsp;to&nbsp;/settings/system&nbsp;interface</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-set_module_settings"><strong>set_module_settings</strong></a>(self, *args, **kwargs)</dt><dd><tt>Set&nbsp;Module&nbsp;settings.<br>
+Uses&nbsp;PUT&nbsp;to&nbsp;/settings/modules&nbsp;interface<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;API&nbsp;documentation&nbsp;for&nbsp;argument&nbsp;details</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-set_system_settings"><strong>set_system_settings</strong></a>(self, *args, **kwargs)</dt><dd><tt>Set&nbsp;system&nbsp;settings.<br>
+Uses&nbsp;PUT&nbsp;to&nbsp;/settings/system&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data:&nbsp;(dict)&nbsp;settings&nbsp;and&nbsp;values&nbsp;to&nbsp;set</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-start_enrollment"><strong>start_enrollment</strong></a>(self, *args, **kwargs)</dt><dd><tt>Start&nbsp;Client&nbsp;Enrollment.<br>
+Uses&nbsp;the&nbsp;POST&nbsp;to&nbsp;/enrollments&nbsp;interface<br>
+&nbsp;<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;Name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pin:&nbsp;(str)&nbsp;Client's&nbsp;PIN.&nbsp;4&nbsp;digit&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;phone_number&nbsp;(str)&nbsp;Phone&nbsp;number&nbsp;to&nbsp;call.<br>
+return:&nbsp;(dict)&nbsp;Enrollment&nbsp;record&nbsp;with&nbsp;prompts</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-start_verification"><strong>start_verification</strong></a>(self, *args, **kwargs)</dt><dd><tt>Start&nbsp;a&nbsp;verification.<br>
+Uses&nbsp;POST&nbsp;to&nbsp;/verifications&nbsp;interface<br>
+&nbsp;<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;Name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;verification_speed:&nbsp;(int)&nbsp;Allowed&nbsp;values:&nbsp;0,&nbsp;25,&nbsp;50,&nbsp;75,&nbsp;100<br>
+&nbsp;&nbsp;&nbsp;&nbsp;row_doubling&nbsp;(str)&nbsp;Allowed&nbsp;values:&nbsp;"off",&nbsp;"train",&nbsp;"on"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;phone_number&nbsp;(str)&nbsp;Phone&nbsp;number&nbsp;to&nbsp;call.<br>
+&nbsp;<br>
+returns:&nbsp;(dict)&nbsp;verification&nbsp;record&nbsp;with&nbsp;animation.</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-status"><strong>status</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;server&nbsp;status<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/status&nbsp;interface<br>
+&nbsp;<br>
+returns:&nbsp;(dict)&nbsp;Server&nbsp;status</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-update_client_info"><strong>update_client_info</strong></a>(self, *args, **kwargs)</dt><dd><tt>Update&nbsp;client&nbsp;info<br>
+Uses&nbsp;PUT&nbsp;to&nbsp;/clients/&lt;client&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;See&nbsp;API&nbsp;documentation&nbsp;for&nbsp;other&nbsp;arguments</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-upload_enrollment_resource"><strong>upload_enrollment_resource</strong></a>(self, *args, **kwargs)</dt><dd><tt>Upload&nbsp;Enrollment&nbsp;Data.<br>
+Uses&nbsp;PUT&nbsp;to&nbsp;/enrollments/&lt;enrollment_id&gt;&nbsp;interface<br>
+&nbsp;<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;enrollment_id:&nbsp;(str)&nbsp;Enrollment's&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;audio_file:&nbsp;(str)&nbsp;Path&nbsp;to&nbsp;the&nbsp;audio&nbsp;file&nbsp;of&nbsp;the&nbsp;recorded&nbsp;words.&nbsp;Not&nbsp;required&nbsp;for&nbsp;phone&nbsp;enrollments.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;word_boundaries:&nbsp;(list)&nbsp;Word&nbsp;boundaries&nbsp;for&nbsp;recorded&nbsp;words:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ex.&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"start":&nbsp;0,&nbsp;"end":&nbsp;1741,&nbsp;"phrase":&nbsp;"Nashville"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"start":&nbsp;1741,&nbsp;"end":&nbsp;3505,&nbsp;"phrase":&nbsp;"Nashville"},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;recording_start:&nbsp;(str)&nbsp;String&nbsp;representation&nbsp;of&nbsp;the&nbsp;time&nbsp;the&nbsp;recording&nbsp;was&nbsp;started.&nbsp;Only&nbsp;needed&nbsp;for&nbsp;phone<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enrollments.&nbsp;ex.&nbsp;2016-06-16&nbsp;17:27:13.984352</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-upload_verification_resource"><strong>upload_verification_resource</strong></a>(self, *args, **kwargs)</dt><dd><tt>Upload&nbsp;verification&nbsp;data.<br>
+Uses&nbsp;PUT&nbsp;to&nbsp;/verfications/&lt;resource&gt;&nbsp;interface<br>
+&nbsp;<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;(str)&nbsp;Verification&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;word_boundaries:&nbsp;(list)&nbsp;Word&nbsp;boundaries&nbsp;for&nbsp;recorded&nbsp;words:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ex.&nbsp;[<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;275.558,&nbsp;1928.548,&nbsp;3581.672,&nbsp;5234.646,&nbsp;6887.727]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;recording_start:&nbsp;(str)&nbsp;String&nbsp;representation&nbsp;of&nbsp;the&nbsp;time&nbsp;the&nbsp;recording&nbsp;was&nbsp;started.&nbsp;Only&nbsp;needed&nbsp;for&nbsp;phone<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verifications.&nbsp;ex.&nbsp;2016-06-16&nbsp;17:27:13.984352<br>
+&nbsp;&nbsp;&nbsp;&nbsp;audio_file:&nbsp;(str)&nbsp;Path&nbsp;to&nbsp;the&nbsp;audio&nbsp;file&nbsp;of&nbsp;the&nbsp;recorded&nbsp;words.&nbsp;Not&nbsp;required&nbsp;for&nbsp;phone&nbsp;verifications.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bypass:&nbsp;(boolean)&nbsp;True&nbsp;if&nbsp;using&nbsp;a&nbsp;bypass&nbsp;code&nbsp;or&nbsp;pin&nbsp;to&nbsp;verify<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bypass_pin:&nbsp;(str)&nbsp;Client's&nbsp;PIN&nbsp;if&nbsp;this&nbsp;is&nbsp;a&nbsp;bypass<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bypass_code:&nbsp;(str)&nbsp;Client's&nbsp;bypass&nbsp;code&nbsp;if&nbsp;this&nbsp;is&nbsp;a&nbsp;bypass</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-validate_password"><strong>validate_password</strong></a>(self, *args, **kwargs)</dt><dd><tt>Validate&nbsp;client's&nbsp;password<br>
+Uses&nbsp;PUT&nbsp;to&nbsp;/clients/&lt;client&gt;&nbsp;interface<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;password:&nbsp;(str)&nbsp;Client's&nbsp;Password</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-validate_pin"><strong>validate_pin</strong></a>(self, *args, **kwargs)</dt><dd><tt>Validate&nbsp;client's&nbsp;PIN<br>
+Uses&nbsp;PUT&nbsp;to&nbsp;/clients/&lt;client&gt;&nbsp;interface<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;ID<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pin:&nbsp;(str)&nbsp;Client's&nbsp;PIN</tt></dd></dl>
+
+<dl><dt><a name="Knufactor-warnings"><strong>warnings</strong></a>(self, *args, **kwargs)</dt><dd><tt>Get&nbsp;server&nbsp;system&nbsp;warnings<br>
+Uses&nbsp;GET&nbsp;to&nbsp;/status/warnings<br>
+&nbsp;<br>
+returns:&nbsp;(dict)&nbsp;Server&nbsp;messages&nbsp;and&nbsp;warnings</tt></dd></dl>
+
+</td></tr></table>
+</body></html>
