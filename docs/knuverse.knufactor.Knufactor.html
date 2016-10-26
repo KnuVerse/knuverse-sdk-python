@@ -131,11 +131,6 @@ return:&nbsp;(int)&nbsp;Number&nbsp;of&nbsp;verifications</tt></dd></dl>
 <dl><dt><a name="Knufactor-refresh_auth"><strong>refresh_auth</strong></a>(self, username<font color="#909090">=None</font>, password<font color="#909090">=None</font>, account<font color="#909090">=None</font>)</dt><dd><tt>Renew&nbsp;authentication&nbsp;token&nbsp;manually.<br>
 Uses&nbsp;POST&nbsp;to&nbsp;/auth&nbsp;interface</tt></dd></dl>
 
-<dl><dt><a name="Knufactor-remove_client"><strong>remove_client</strong></a>(self, *args, **kwargs)</dt><dd><tt>Remove&nbsp;a&nbsp;client<br>
-Uses&nbsp;DELETE&nbsp;to&nbsp;/clients/&lt;client&gt;&nbsp;interface<br>
-args:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;ID</tt></dd></dl>
-
 <dl><dt><a name="Knufactor-remove_verification_resource"><strong>remove_verification_resource</strong></a>(self, *args, **kwargs)</dt><dd><tt>Remove&nbsp;verification<br>
 Uses&nbsp;DELETE&nbsp;to&nbsp;/verifications/&lt;resource&gt;&nbsp;interface<br>
 args:<br>
@@ -182,6 +177,11 @@ Uses&nbsp;GET&nbsp;to&nbsp;/status&nbsp;interface<br>
 &nbsp;<br>
 returns:&nbsp;(dict)&nbsp;Server&nbsp;status</tt></dd></dl>
 
+<dl><dt><a name="Knufactor-unenroll_client"><strong>unenroll_client</strong></a>(self, *args, **kwargs)</dt><dd><tt>Unenroll&nbsp;a&nbsp;client<br>
+Uses&nbsp;DELETE&nbsp;to&nbsp;/clients/&lt;client&gt;&nbsp;interface<br>
+args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;client:&nbsp;(str)&nbsp;Client's&nbsp;ID</tt></dd></dl>
+
 <dl><dt><a name="Knufactor-update_client_info"><strong>update_client_info</strong></a>(self, *args, **kwargs)</dt><dd><tt>Update&nbsp;client&nbsp;info<br>
 Uses&nbsp;PUT&nbsp;to&nbsp;/clients/&lt;client&gt;&nbsp;interface<br>
 args:<br>
@@ -193,28 +193,13 @@ Uses&nbsp;PUT&nbsp;to&nbsp;/enrollments/&lt;enrollment_id&gt;&nbsp;interface<br>
 &nbsp;<br>
 args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;enrollment_id:&nbsp;(str)&nbsp;Enrollment's&nbsp;ID<br>
-&nbsp;&nbsp;&nbsp;&nbsp;audio_file:&nbsp;(str)&nbsp;Path&nbsp;to&nbsp;the&nbsp;audio&nbsp;file&nbsp;of&nbsp;the&nbsp;recorded&nbsp;words.&nbsp;Not&nbsp;required&nbsp;for&nbsp;phone&nbsp;enrollments.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;word_boundaries:&nbsp;(list)&nbsp;Word&nbsp;boundaries&nbsp;for&nbsp;recorded&nbsp;words:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ex.&nbsp;[<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"start":&nbsp;0,&nbsp;"end":&nbsp;1741,&nbsp;"phrase":&nbsp;"Nashville"},<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"start":&nbsp;1741,&nbsp;"end":&nbsp;3505,&nbsp;"phrase":&nbsp;"Nashville"},<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;recording_start:&nbsp;(str)&nbsp;String&nbsp;representation&nbsp;of&nbsp;the&nbsp;time&nbsp;the&nbsp;recording&nbsp;was&nbsp;started.&nbsp;Only&nbsp;needed&nbsp;for&nbsp;phone<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enrollments.&nbsp;ex.&nbsp;2016-06-16&nbsp;17:27:13.984352</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;audio_file:&nbsp;(str)&nbsp;Path&nbsp;to&nbsp;the&nbsp;audio&nbsp;file&nbsp;of&nbsp;the&nbsp;recorded&nbsp;words.&nbsp;Not&nbsp;required&nbsp;for&nbsp;phone&nbsp;enrollments.</tt></dd></dl>
 
 <dl><dt><a name="Knufactor-upload_verification_resource"><strong>upload_verification_resource</strong></a>(self, *args, **kwargs)</dt><dd><tt>Upload&nbsp;verification&nbsp;data.<br>
 Uses&nbsp;PUT&nbsp;to&nbsp;/verfications/&lt;resource&gt;&nbsp;interface<br>
 &nbsp;<br>
 args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;resource:&nbsp;(str)&nbsp;Verification&nbsp;ID<br>
-&nbsp;&nbsp;&nbsp;&nbsp;word_boundaries:&nbsp;(list)&nbsp;Word&nbsp;boundaries&nbsp;for&nbsp;recorded&nbsp;words:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ex.&nbsp;[<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;275.558,&nbsp;1928.548,&nbsp;3581.672,&nbsp;5234.646,&nbsp;6887.727]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
-&nbsp;&nbsp;&nbsp;&nbsp;recording_start:&nbsp;(str)&nbsp;String&nbsp;representation&nbsp;of&nbsp;the&nbsp;time&nbsp;the&nbsp;recording&nbsp;was&nbsp;started.&nbsp;Only&nbsp;needed&nbsp;for&nbsp;phone<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verifications.&nbsp;ex.&nbsp;2016-06-16&nbsp;17:27:13.984352<br>
 &nbsp;&nbsp;&nbsp;&nbsp;audio_file:&nbsp;(str)&nbsp;Path&nbsp;to&nbsp;the&nbsp;audio&nbsp;file&nbsp;of&nbsp;the&nbsp;recorded&nbsp;words.&nbsp;Not&nbsp;required&nbsp;for&nbsp;phone&nbsp;verifications.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bypass:&nbsp;(boolean)&nbsp;True&nbsp;if&nbsp;using&nbsp;a&nbsp;bypass&nbsp;code&nbsp;or&nbsp;pin&nbsp;to&nbsp;verify<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bypass_pin:&nbsp;(str)&nbsp;Client's&nbsp;PIN&nbsp;if&nbsp;this&nbsp;is&nbsp;a&nbsp;bypass<br>
