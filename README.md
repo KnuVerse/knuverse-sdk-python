@@ -2,7 +2,7 @@
 
 This project is a Python SDK that allows developers to create apps that use Knuverse's Cloud APIs. *Coming Soon!*
 
-Documentation for the API can be found [here](https://cloud.knuverse.com/docs/)
+Documentation for the API can be found [here](https://cloud.knuverse.com/docs/) <br />
 Documentation for the SDK can be found [here](https://knuverse.github.io/knuverse-sdk-python/knuverse.knufactor.Knufactor.html).
 
 Quick Start
