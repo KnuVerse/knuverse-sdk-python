@@ -55,6 +55,12 @@ class NotFoundException(HttpErrorException):
     """
 
 
+class RateLimitedException(HttpErrorException):
+    """
+    Used for HTTP Rate Limited(429) Errors
+    """
+
+
 class InternalServerErrorException(HttpErrorException):
     """
     Used for HTTP Internal Server Error(500) Errors
@@ -198,6 +204,9 @@ class Knufactor:
 
         elif response_code == 404:
             raise NotFoundException(response.text)
+
+        elif response_code == 429:
+            raise RateLimitedException(response.text)
 
         else:
             raise InternalServerErrorException(response.text)
@@ -454,9 +463,9 @@ class Knufactor:
         self._check_response(response, 200)
 
     @_auth
-    def remove_client(self, client):
+    def unenroll_client(self, client):
         """
-        Remove a client
+        Unenroll a client
         Uses DELETE to /clients/<client> interface
         args:
             client: (str) Client's ID
@@ -521,7 +530,6 @@ class Knufactor:
         self,
         enrollment_id,
         audio_file=None,
-        recording_start=None,
     ):
         """
         Upload Enrollment Data.
@@ -530,22 +538,10 @@ class Knufactor:
         args:
             enrollment_id: (str) Enrollment's ID
             audio_file: (str) Path to the audio file of the recorded words. Not required for phone enrollments.
-            word_boundaries: (list) Word boundaries for recorded words:
-                ex. [
-                        {"start": 0, "end": 1741, "phrase": "Nashville"},
-                        {"start": 1741, "end": 3505, "phrase": "Nashville"},
-                        ...
-                    ]
-            recording_start: (str) String representation of the time the recording was started. Only needed for phone
-                                   enrollments. ex. 2016-06-16 17:27:13.984352
 
         """
-        if recording_start:
-            # Phone enrollment
-            files = {
-                "recording_start": recording_start,
-            }
-        else:
+
+        if audio_file:
             # File upload
             files = {
                 "file": os.path.basename(audio_file),
@@ -859,8 +855,6 @@ class Knufactor:
     def upload_verification_resource(
             self,
             resource,
-            word_boundaries,
-            recording_start=None,
             audio_file=None,
             bypass=False,
             bypass_pin=None,
@@ -872,22 +866,13 @@ class Knufactor:
 
         args:
             resource: (str) Verification ID
-            word_boundaries: (list) Word boundaries for recorded words:
-                ex. [
-                        275.558, 1928.548, 3581.672, 5234.646, 6887.727]
-                        ...
-                    ]
-            recording_start: (str) String representation of the time the recording was started. Only needed for phone
-                                   verifications. ex. 2016-06-16 17:27:13.984352
             audio_file: (str) Path to the audio file of the recorded words. Not required for phone verifications.
             bypass: (boolean) True if using a bypass code or pin to verify
             bypass_pin: (str) Client's PIN if this is a bypass
             bypass_code: (str) Client's bypass code if this is a bypass
 
         """
-        files = {
-            "word_boundaries": json.dumps(word_boundaries)
-        }
+        files = {}
         if audio_file:
             files[os.path.basename(audio_file)] = open(audio_file, 'rb')
             files["file"] = os.path.basename(audio_file)
@@ -895,8 +880,6 @@ class Knufactor:
             files["bypass"] = True
             files["bypass_code"] = bypass_code
             files["pin"] = bypass_pin
-        elif recording_start:
-            files["recording_start"] = recording_start
         response = self._put(url.verifications_id.format(id=resource), files=files)
         self._check_response(response, 202)
         return self._create_response(response)
