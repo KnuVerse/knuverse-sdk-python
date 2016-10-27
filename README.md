@@ -24,5 +24,5 @@ api = Knufactor(
     account="<account_id>"
 )
 for client in api.get_clients():
-    print "%s: %s" % (client.get("name"), client.get("state")),
+    print "%s: %s" % (client.get("name"), client.get("state"))
 ```
