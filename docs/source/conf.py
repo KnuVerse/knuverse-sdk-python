@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# Knuverse-SDK-Python documentation build configuration file, created by
-# sphinx-quickstart on Thu Nov  3 08:38:41 2016.
+# Knuverse SDK - Python documentation build configuration file, created by
+# sphinx-quickstart on Fri Nov  4 10:02:47 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -31,6 +31,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.githubpages',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -50,7 +51,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Knuverse-SDK-Python'
+project = u'Knuverse SDK - Python'
 copyright = u'2016, Knuverse'
 author = u'Knuverse'
 
@@ -135,7 +136,7 @@ html_theme = 'alabaster'
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = u'Knuverse-SDK-Python v1.0.4'
+# html_title = u'Knuverse SDK - Python v1.0.4'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -235,7 +236,7 @@ html_static_path = ['_static']
 # html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Knuverse-SDK-Pythondoc'
+htmlhelp_basename = 'KnuverseSDK-Pythondoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -261,7 +262,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'Knuverse-SDK-Python.tex', u'Knuverse-SDK-Python Documentation',
+    (master_doc, 'KnuverseSDK-Python.tex', u'Knuverse SDK - Python Documentation',
      u'Knuverse', 'manual'),
 ]
 
@@ -303,7 +304,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'knuverse-sdk-python', u'Knuverse-SDK-Python Documentation',
+    (master_doc, 'knuversesdk-python', u'Knuverse SDK - Python Documentation',
      [author], 1)
 ]
 
@@ -318,8 +319,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Knuverse-SDK-Python', u'Knuverse-SDK-Python Documentation',
-     author, 'Knuverse-SDK-Python', 'One line description of project.',
+    (master_doc, 'KnuverseSDK-Python', u'Knuverse SDK - Python Documentation',
+     author, 'KnuverseSDK-Python', 'One line description of project.',
      'Miscellaneous'),
 ]
 

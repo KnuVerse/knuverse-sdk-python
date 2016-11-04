@@ -91,9 +91,9 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/Knuverse-SDK-Python.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/KnuverseSDK-Python.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/Knuverse-SDK-Python.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/KnuverseSDK-Python.qhc"
 
 .PHONY: applehelp
 applehelp:
@@ -110,8 +110,8 @@ devhelp:
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/Knuverse-SDK-Python"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/Knuverse-SDK-Python"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/KnuverseSDK-Python"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/KnuverseSDK-Python"
 	@echo "# devhelp"
 
 .PHONY: epub
