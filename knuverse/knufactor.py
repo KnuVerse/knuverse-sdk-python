@@ -4,7 +4,6 @@ All rights reserved.
 """
 import os
 import re
-import json
 import requests
 from functools import wraps
 from datetime import datetime, timedelta
@@ -110,7 +109,7 @@ class Knufactor:
         def method(self, *args, **kwargs):
             if not self._noauth and (not self._auth_token or datetime.utcnow() >= self._last_auth + timedelta(minutes=10)):
                 # Need to get new jwt
-                self.refresh_auth()
+                self.auth_refresh()
 
             return f(self, *args, **kwargs)
         return method
@@ -211,11 +210,11 @@ class Knufactor:
         else:
             raise InternalServerErrorException(response.text)
 
-    def _get_client_id(self, client):
+    def _client_id(self, client):
 
         # If not formatted like a client ID, assume it's a client name and get the ID.
         if not re.match(r"[a-f,0-9]{32}", client):
-            client = self.get_client_id(client)
+            client = self.client_id(client)
 
         if not client:
             raise NotFoundException("%s not found." % client)
@@ -225,18 +224,18 @@ class Knufactor:
     # Authentication interfaces
     # =========================
 
-    def refresh_auth(self, username=None, password=None, account=None):
+    def auth_refresh(self, username=None, password=None, account=None):
         """
         Renew authentication token manually.
         Uses POST to /auth interface
         """
-        jwt = self.get_authorization_bearer(username=username, password=password, account=account)
+        jwt = self.auth_token(username=username, password=password, account=account)
         self._headers["Authorization"] = "Bearer %s" % jwt
 
         self._auth_token = jwt
         self._last_auth = datetime.utcnow()
 
-    def get_authorization_bearer(self, username=None, password=None, account=None):
+    def auth_token(self, username=None, password=None, account=None):
         """
         Get authentication token.
         Uses POST to /auth interface
@@ -260,7 +259,7 @@ class Knufactor:
     ###################
 
     @_auth
-    def create_client(self, name, password):
+    def client_create(self, name, password):
         """
         Create a new client
         Uses the POST to /clients interface
@@ -278,7 +277,7 @@ class Knufactor:
         return self._create_response(response).get("client_id")
 
     @_auth
-    def get_client_count(self):
+    def client_count(self):
         """
         Get number of clients
         Uses HEAD to /clients interface
@@ -290,7 +289,7 @@ class Knufactor:
         return int(response.headers.get("x-client-count", -1))
 
     @_auth
-    def get_clients(self, name=None, name_only=None, all_enrolled=None):
+    def client_list(self, name=None, name_only=None, all_enrolled=None):
         """
         Get list of clients.
         Uses GET to /clients interface.
@@ -314,7 +313,7 @@ class Knufactor:
         return self._create_response(response).get("clients")
 
     @_auth
-    def get_client_id(self, client):
+    def client_id(self, client):
         """
         Get a client's ID
         Uses GET to /clients?name=<client> interface
@@ -333,7 +332,7 @@ class Knufactor:
         return self._create_response(response).get("client_id")
 
     @_auth
-    def get_client_info(self, client):
+    def client_info(self, client):
         """
         Get client info
         Uses GET to /clients/<client> interface
@@ -342,13 +341,13 @@ class Knufactor:
 
         return (dict) Client dictionary
         """
-        client = self._get_client_id(client)
+        client = self._client_id(client)
         response = self._get(url.clients_id.format(id=client))
         self._check_response(response, 200)
         return self._create_response(response)
 
     @_auth
-    def validate_password(self, client, password):
+    def client_validate_password(self, client, password):
         """
         Validate client's password
         Uses PUT to /clients/<client> interface
@@ -357,7 +356,7 @@ class Knufactor:
             password: (str) Client's Password
         """
 
-        client = self._get_client_id(client)
+        client = self._client_id(client)
         body = {
             "action": "validate_password",
             "auth_password": password
@@ -367,7 +366,7 @@ class Knufactor:
         self._check_response(response, 200)
 
     @_auth
-    def validate_pin(self, client, pin):
+    def client_validate_pin(self, client, pin):
         """
         Validate client's PIN
         Uses PUT to /clients/<client> interface
@@ -376,7 +375,7 @@ class Knufactor:
             pin: (str) Client's PIN
         """
 
-        client = self._get_client_id(client)
+        client = self._client_id(client)
         body = {
             "action": "validate_pin",
             "current_pin": pin
@@ -386,7 +385,7 @@ class Knufactor:
         self._check_response(response, 200)
 
     @_auth
-    def update_client_info(self,
+    def client_update(self,
                            client,
                            reason=None,
                            pin=None,
@@ -415,7 +414,7 @@ class Knufactor:
             client: (str) Client's ID
             See API documentation for other arguments
         """
-        client = self._get_client_id(client)
+        client = self._client_id(client)
 
         body = {}
         if reason is not None:
@@ -463,14 +462,14 @@ class Knufactor:
         self._check_response(response, 200)
 
     @_auth
-    def unenroll_client(self, client):
+    def client_unenroll(self, client):
         """
         Unenroll a client
         Uses DELETE to /clients/<client> interface
         args:
             client: (str) Client's ID
         """
-        client = self._get_client_id(client)
+        client = self._client_id(client)
         response = self._delete(url.clients_id.format(id=client))
         self._check_response(response, 204)
 
@@ -478,7 +477,7 @@ class Knufactor:
     #######################
 
     @_auth
-    def get_enrollment_resource(self, client, audio=False):
+    def enrollment_resource(self, client, audio=False):
         """
         Get Client Enrollment Data.
         Uses GET to /enrollments/<client> interface
@@ -487,7 +486,7 @@ class Knufactor:
             audio: (boolean) If True then the enrollment audio is returned.
         return: (dict)
         """
-        client = self._get_client_id(client)
+        client = self._client_id(client)
         params = {}
         if audio:
             params["audio"] = True
@@ -497,10 +496,11 @@ class Knufactor:
         return self._create_response(response)
 
     @_auth
-    def start_enrollment(
+    def enrollment_start(
             self,
             name,
-            pin,
+            mode=None,
+            pin=None,
             phone_number=None
     ):
         """
@@ -509,15 +509,19 @@ class Knufactor:
 
         args:
             client: (str) Client's Name
+            mode: (str) Enrollment type. Allowed values: "audiopin", "audiopass"
             pin: (str) Client's PIN. 4 digit string
             phone_number (str) Phone number to call.
         return: (dict) Enrollment record with prompts
         """
         data = {
             "name": name,
-            "pin": pin
         }
 
+        if mode:
+            data["mode"] = mode
+        if pin:
+            data["pin"] = pin
         if phone_number:
             data["phone_number"] = phone_number
 
@@ -526,7 +530,7 @@ class Knufactor:
         return self._create_response(response)
 
     @_auth
-    def upload_enrollment_resource(
+    def enrollment_upload(
         self,
         enrollment_id,
         audio_file=None,
@@ -555,7 +559,7 @@ class Knufactor:
     # ================
 
     @_auth
-    def get_client_events(self, client):
+    def events_client(self, client):
         """
         Get a client's events
         Uses GET to /events/clients/<client> interface
@@ -565,13 +569,13 @@ class Knufactor:
         Returns: (list) Events
         """
         # TODO Add paging to this
-        client = self._get_client_id(client)
+        client = self._client_id(client)
         response = self._get(url.events_clients_id.format(id=client))
         self._check_response(response, 200)
         return self._create_response(response).get("events")
 
     @_auth
-    def get_all_client_events(self):
+    def events_clients(self):
         """
         Get all client events
         Uses GET to /events/clients interface
@@ -584,7 +588,7 @@ class Knufactor:
         return self._create_response(response).get("events")
 
     @_auth
-    def get_all_login_events(self):
+    def events_login(self):
         """
         Get all login events
         Uses GET to /events/login interface
@@ -596,7 +600,7 @@ class Knufactor:
         return self._create_response(response).get("events")
 
     @_auth
-    def get_all_system_events(self):
+    def events_system(self):
         """
         Get all system events
         Uses GET to /events/system interface
@@ -649,7 +653,7 @@ class Knufactor:
     ###########################
 
     @_auth
-    def get_module_settings(self):
+    def module_settings(self):
         """
         Get Module settings.
         Uses GET to /settings/modules interface
@@ -660,7 +664,7 @@ class Knufactor:
         return self._create_response(response)
 
     @_auth
-    def set_module_settings(self,
+    def settings_module_update(self,
                             ldap_enable=None,
                             phone_enable=None,
                             windows_enable=None,
@@ -697,7 +701,7 @@ class Knufactor:
         self._check_response(response, 200)
 
     @_auth
-    def reset_module_settings(self):
+    def settings_module_reset(self):
         """
         Resets the module settings back to default.
         Uses DELETE to /settings/modules interface
@@ -723,7 +727,7 @@ class Knufactor:
         return start_str, end_str
 
     @_auth
-    def create_event_report(self, start_date, end_date, type="system"):
+    def report_events(self, start_date, end_date, type="system"):
         """
         Create a report for all client events or all system events
         Uses GET to /reports/events/{clients,system} interface
@@ -746,7 +750,7 @@ class Knufactor:
         return self._create_response(response).get("events")
 
     @_auth
-    def create_verification_report(self, start_date, end_date):
+    def report_verifications(self, start_date, end_date):
         """
         Create a report for all verifications
         Uses GET to /reports/verifications interface
@@ -770,7 +774,7 @@ class Knufactor:
     ############################
 
     @_auth
-    def get_system_settings(self):
+    def settings_system(self):
         """
         Get system settings.
         Uses GET to /settings/system interface
@@ -781,7 +785,7 @@ class Knufactor:
         return self._create_response(response)
 
     @_auth
-    def set_system_settings(self, data):
+    def settings_system_update(self, data):
         """
         Set system settings.
         Uses PUT to /settings/system interface
@@ -794,7 +798,7 @@ class Knufactor:
         self._check_response(response, 200)
 
     @_auth
-    def reset_system_settings(self):
+    def settings_system_reset(self):
         """
         Resets the system settings back to default.
         Uses DELETE to /settings/system interface
@@ -810,7 +814,7 @@ class Knufactor:
     #########################
 
     @_auth
-    def start_verification(
+    def verification_start(
         self,
         client,
         mode=None,
@@ -824,6 +828,7 @@ class Knufactor:
 
         args:
             client: (str) Client's Name
+            mode: (str) Verification Mode. Allowed values: "audiopin", "audiopass"
             verification_speed: (int) Allowed values: 0, 25, 50, 75, 100
             row_doubling (str) Allowed values: "off", "train", "on"
             phone_number (str) Phone number to call.
@@ -852,9 +857,9 @@ class Knufactor:
         return self._create_response(response)
 
     @_auth
-    def upload_verification_resource(
+    def verification_upload(
             self,
-            resource,
+            verification_id,
             audio_file=None,
             bypass=False,
             bypass_pin=None,
@@ -862,10 +867,10 @@ class Knufactor:
             ):
         """
         Upload verification data.
-        Uses PUT to /verfications/<resource> interface
+        Uses PUT to /verfications/<verification_id> interface
 
         args:
-            resource: (str) Verification ID
+            verification_id: (str) Verification ID
             audio_file: (str) Path to the audio file of the recorded words. Not required for phone verifications.
             bypass: (boolean) True if using a bypass code or pin to verify
             bypass_pin: (str) Client's PIN if this is a bypass
@@ -880,17 +885,17 @@ class Knufactor:
             files["bypass"] = True
             files["bypass_code"] = bypass_code
             files["pin"] = bypass_pin
-        response = self._put(url.verifications_id.format(id=resource), files=files)
+        response = self._put(url.verifications_id.format(id=verification_id), files=files)
         self._check_response(response, 202)
         return self._create_response(response)
 
     @_auth
-    def cancel_verification_resource(self, resource, reason=None):
+    def verification_cancel(self, verification_id, reason=None):
         """
         Cancels a started verification
-        Uses PUT to /verifications/<resource> interface
+        Uses PUT to /verifications/<verification_id> interface
         args:
-            resource: (str) Verification ID
+            verification_id: (str) Verification ID
             reason: (str) Reason for cancelling the verification
         """
 
@@ -899,22 +904,22 @@ class Knufactor:
             "cancel_reason": reason
         }
 
-        response = self._put(url.verifications_id.format(id=resource), body=data)
+        response = self._put(url.verifications_id.format(id=verification_id), body=data)
         self._check_response(response, 202)
 
     @_auth
-    def remove_verification_resource(self, resource):
+    def verification_delete(self, verification_id):
         """
         Remove verification
-        Uses DELETE to /verifications/<resource> interface
+        Uses DELETE to /verifications/<verification_id> interface
         args:
-            resource: (str) Verification ID
+            verification_id: (str) Verification ID
         """
-        response = self._delete(url.verifications_id.format(id=resource))
+        response = self._delete(url.verifications_id.format(id=verification_id))
         self._check_response(response, 204)
 
     @_auth
-    def get_verifications_count(self):
+    def verification_count(self):
         """
         Get Verification Count.
         Uses HEAD to /verifications interface
@@ -925,7 +930,7 @@ class Knufactor:
         return int(response.headers.get('x-verification-count', -1))
 
     @_auth
-    def get_verifications(self, limit=10):
+    def verification_list(self, limit=10):
         """
         Get list of verifications.
         Uses GET to /verifications interface
@@ -940,12 +945,12 @@ class Knufactor:
         return self._create_response(response).get("verifications")
 
     @_auth
-    def get_verification_resource(self, resource, audio=False):
+    def verification_resource(self, verification_id, audio=False):
         """
         Get Verification Resource.
-        Uses GET to /verifications/<resource> interface
+        Uses GET to /verifications/<verification_id> interface
         args:
-            resource: (str) Verification ID
+            verification_id: (str) Verification ID
             audio: (boolean) If True, audio data associated with verification will be returned.
         return: (dict) Verification data
         """
@@ -953,6 +958,6 @@ class Knufactor:
         if audio:
             params["audio"] = True
 
-        response = self._get(url.verifications_id.format(id=resource), params=params)
+        response = self._get(url.verifications_id.format(id=verification_id), params=params)
         self._check_response(response, 200)
         return self._create_response(response)
