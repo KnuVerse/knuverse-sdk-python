@@ -85,7 +85,7 @@ class Knufactor:
         self._headers = {
             "Accept": "application/json",
         }
-        self.version = "1.0.5"
+        self.version = "1.0.6"
 
     # Private Methods
     # ###############
@@ -966,6 +966,28 @@ class Knufactor:
         params = {}
         if audio:
             params["audio"] = True
+
+        response = self._get(url.verifications_id.format(id=resource), params=params)
+        self._check_response(response, 200)
+        return self._create_response(response)
+
+    @_auth
+    def get_verification_resource_secure(self, resource, jwt, name):
+        """
+        Get Verification Resource.
+        Uses GET to /verifications/<resource> interface
+        Use this method rather than get_verification_resource when adding a second factor to your application.
+        See: https://cloud.knuverse.com/docs/integration/ for more information
+        args:
+            resource: (str) Verification ID
+            jwt: (str) Completion token received from application after
+            name: (str) Client name associated with the jwt. Received from application
+        return: (dict) Verification data
+        """
+        params = {
+            "jwt": jwt,
+            "name": name
+        }
 
         response = self._get(url.verifications_id.format(id=resource), params=params)
         self._check_response(response, 200)
