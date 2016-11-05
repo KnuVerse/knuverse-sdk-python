@@ -17,7 +17,6 @@ Then, in a Python file:
 from knuverse.knufactor import Knufactor
 
 api = Knufactor(
-    "https://cloud.knuverse.com",
     <api_key>,
     <secret>
 )

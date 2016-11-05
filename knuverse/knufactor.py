@@ -68,9 +68,9 @@ class InternalServerErrorException(HttpErrorException):
 
 class Knufactor:
     def __init__(self,
-                 server,
                  apikey,
                  secret,
+                 server="https://cloud.knuverse.com",
                  base_uri="/api/v1/"):
 
         if not server.startswith("http://") and not server.startswith("https://"):
@@ -85,7 +85,7 @@ class Knufactor:
         self._headers = {
             "Accept": "application/json",
         }
-        self.version = "1.0.6"
+        self.version = "1.0.7"
 
     # Private Methods
     # ###############
