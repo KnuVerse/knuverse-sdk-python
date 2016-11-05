@@ -4,7 +4,6 @@ All rights reserved.
 """
 import os
 import re
-import json
 import requests
 from functools import wraps
 from datetime import datetime, timedelta
@@ -70,10 +69,8 @@ class InternalServerErrorException(HttpErrorException):
 class Knufactor:
     def __init__(self,
                  server,
-                 username=None,
-                 password=None,
-                 account=None,
-                 noauth=False,
+                 apikey,
+                 secret,
                  base_uri="/api/v1/"):
 
         if not server.startswith("http://") and not server.startswith("https://"):
@@ -81,16 +78,14 @@ class Knufactor:
             server = "https://" + server
 
         self._server = server + base_uri
-        self._username = username
-        self._password = password
-        self._account = account
+        self._apikey = apikey
+        self._secret = secret
         self._last_auth = None
         self._auth_token = None
-        self._noauth = noauth
         self._headers = {
             "Accept": "application/json",
         }
-        self.version = "1.0.4"
+        self.version = "1.0.5"
 
     # Private Methods
     # ###############
@@ -108,7 +103,7 @@ class Knufactor:
         """
         @wraps(f)
         def method(self, *args, **kwargs):
-            if not self._noauth and (not self._auth_token or datetime.utcnow() >= self._last_auth + timedelta(minutes=10)):
+            if not self._auth_token or datetime.utcnow() >= self._last_auth + timedelta(minutes=10):
                 # Need to get new jwt
                 self.refresh_auth()
 
@@ -225,36 +220,55 @@ class Knufactor:
     # Authentication interfaces
     # =========================
 
-    def refresh_auth(self, username=None, password=None, account=None):
+    def refresh_auth(self, apikey=None, secret=None):
         """
         Renew authentication token manually.
         Uses POST to /auth interface
         """
-        jwt = self.get_authorization_bearer(username=username, password=password, account=account)
+        jwt = self.get_authorization_bearer(apikey, secret)
         self._headers["Authorization"] = "Bearer %s" % jwt
 
         self._auth_token = jwt
         self._last_auth = datetime.utcnow()
 
-    def get_authorization_bearer(self, username=None, password=None, account=None):
+    def get_authorization_bearer(self, apikey, secret):
         """
         Get authentication token.
         Uses POST to /auth interface
 
-        return: Authentication JWT
+        return: (str) Authentication JWT
         """
         body = {
-            "user": username or self._username,
-            "password": password or self._password
+            "key_id": apikey or self._apikey,
+            "secret": secret or self._secret
         }
-        if account or self._account:
-            body.update({
-                "account_number": account or self._account
-            })
         response = self._post(url.auth, body=body)
 
         self._check_response(response, 200)
         return self._create_response(response).get("jwt")
+
+    @_auth
+    def auth_grant(self, client):
+        """
+        Used to get a grant token.
+        Grant tokens expire after 1 minute.
+        Grant tokens can be used to start verifications.
+        Uses POST to /auth/grant interface
+
+        return: (dict)
+            jwt - (str) Grant token that can be used to do verifications
+            is_disabled - (bool) True if the client is disabled. False otherwise
+            verification_lock - (bool) True if the client is verification locked. False otherwise
+            mode_default - (str) Default verification mode for the server. Either "audiopin" or "audiopass"
+        """
+
+        body = {
+            "name": client
+        }
+        response = self._post(url.auth_grant, body=body)
+
+        self._check_response(response, 200)
+        return self._create_response(response)
 
     # Client interfaces
     ###################

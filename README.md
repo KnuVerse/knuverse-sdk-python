@@ -19,9 +19,8 @@ from knuverse.knufactor import Knufactor
 
 api = Knufactor(
     "https://cloud.knuverse.com",
-    username="<username>",
-    password="<password>",
-    account="<account_id>"
+    <api_key>,
+    <secret>
 )
 for client in api.get_clients():
     print "%s: %s" % (client.get("name"), client.get("state"))
