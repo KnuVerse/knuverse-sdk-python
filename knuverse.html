@@ -93,364 +93,714 @@ All rights reserved.</p>
 
 <dl class="class">
 <dt id="knuverse.knufactor.Knufactor">
-<em class="property">class </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">Knufactor</code><span class="sig-paren">(</span><em>server</em>, <em>username=None</em>, <em>password=None</em>, <em>account=None</em>, <em>noauth=False</em>, <em>base_uri='/api/v1/'</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">Knufactor</code><span class="sig-paren">(</span><em>apikey</em>, <em>secret</em>, <em>server='https://cloud.knuverse.com'</em>, <em>base_uri='/api/v1/'</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
 <dt id="knuverse.knufactor.Knufactor.about">
 <code class="descname">about</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.about" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get server info.
-Uses GET to /about interface</p>
-<p>return: (dict) Server info</p>
+<dd><p>Get server info.  Uses GET to /about interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dict - Server information</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knuverse.knufactor.Knufactor.auth_grant">
+<code class="descname">auth_grant</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.auth_grant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used to get a grant token.  Grant tokens expire after 1 minute.
+Grant tokens can be used to start verifications.  Uses POST to /auth/grant interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>client</em>: (str) Client name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">(dictionary) Specified below</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Return Dictionary:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><ul class="first last simple">
+<li><em>jwt</em> - (str) Grant token that can be used to do verifications</li>
+<li><em>is_disabled</em> - (bool) True if the client is disabled. False otherwise</li>
+<li><em>verification_lock</em> - (bool) True if the client is verification locked. False otherwise</li>
+<li><em>mode_default</em> - (str) Default verification mode for the server. Either &#8220;audiopin&#8221; or &#8220;audiopass&#8221;</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.cancel_verification_resource">
 <code class="descname">cancel_verification_resource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.cancel_verification_resource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Cancels a started verification
-Uses PUT to /verifications/&lt;resource&gt; interface
-args:</p>
-<blockquote>
-<div>resource: (str) Verification ID
-reason: (str) Reason for cancelling the verification</div></blockquote>
+<dd><p>Cancels a started verification.  Uses PUT to /verifications/&lt;resource&gt; interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>resource</em>: (str) Verification ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Kwargs:</th><td class="field-body"><ul class="first simple">
+<li><em>reason</em>: (str) Reason for cancelling the verification</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.create_client">
 <code class="descname">create_client</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.create_client" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new client
-Uses the POST to /clients interface
-Args:</p>
-<blockquote>
-<div>name: (str) Name of client
-password: (str) password of client</div></blockquote>
-<p>Returns: (str) ID of the newly created client.</p>
+<dd><p>Create a new client.  Uses the POST to /clients interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>name</em>: (str) Name of client</li>
+<li><em>password</em>: (str) Password of client</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(str) ID of the newly created client.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.create_event_report">
 <code class="descname">create_event_report</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.create_event_report" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a report for all client events or all system events
-Uses GET to /reports/events/{clients,system} interface
-Args:</p>
-<blockquote>
-<div>start_date: (datetime) Start time for report generation
-end_date: (datetime) End time for report generation
-type: (str) Type of event report to create. &#8220;system&#8221; or &#8220;clients&#8221;</div></blockquote>
-<p>Returns: (list) List of events in the input range</p>
+<dd><p>Create a report for all client events or all system events.
+Uses GET to /reports/events/{clients,system} interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>start_date</em>: (datetime) Start time for report generation</li>
+<li><em>end_date</em>: (datetime) End time for report generation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Kwargs:</th><td class="field-body"><ul class="first simple">
+<li><em>type</em>: (str) Type of event report to create. &#8220;system&#8221; or &#8220;clients&#8221;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(list) List of events in the input range</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.create_verification_report">
 <code class="descname">create_verification_report</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.create_verification_report" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a report for all verifications
-Uses GET to /reports/verifications interface
-Args:</p>
-<blockquote>
-<div>start_date: (datetime) Start time for report generation
-end_date: (datetime) End time for report generation</div></blockquote>
-<p>Returns: (str) CSV formatted report string</p>
+<dd><p>Create a report for all verifications.  Uses GET to /reports/verifications interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>start_date</em>: (datetime) Start time for report generation</li>
+<li><em>end_date</em>: (datetime) End time for report generation</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(str) CSV formatted report string</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_all_client_events">
 <code class="descname">get_all_client_events</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_all_client_events" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all client events
-Uses GET to /events/clients interface</p>
-<p>Returns: (list) Events</p>
+<dd><p>Get all client events.  Uses GET to /events/clients interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(list) Events</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_all_login_events">
 <code class="descname">get_all_login_events</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_all_login_events" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all login events
-Uses GET to /events/login interface</p>
-<p>Returns: (list) Events</p>
+<dd><p>Get all login events.  Uses GET to /events/login interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(list) Events</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_all_system_events">
 <code class="descname">get_all_system_events</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_all_system_events" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get all system events
-Uses GET to /events/system interface</p>
-<p>Returns: (list) Events</p>
+<dd><p>Get all system events.  Uses GET to /events/system interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(list) Events</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_authorization_bearer">
-<code class="descname">get_authorization_bearer</code><span class="sig-paren">(</span><em>username=None</em>, <em>password=None</em>, <em>account=None</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_authorization_bearer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get authentication token.
-Uses POST to /auth interface</p>
-<p>return: Authentication JWT</p>
+<code class="descname">get_authorization_bearer</code><span class="sig-paren">(</span><em>apikey</em>, <em>secret</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_authorization_bearer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get authentication token.  Uses POST to /auth interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(str) Authentication JWT</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_client_count">
 <code class="descname">get_client_count</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_client_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get number of clients
-Uses HEAD to /clients interface</p>
-<p>Returns: (int) Number of clients</p>
+<dd><p>Get number of clients.  Uses HEAD to /clients interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(int) Number of clients</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_client_events">
 <code class="descname">get_client_events</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_client_events" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a client&#8217;s events
-Uses GET to /events/clients/&lt;client&gt; interface
-Args:</p>
-<blockquote>
-<div>client: Client&#8217;s ID</div></blockquote>
-<p>Returns: (list) Events</p>
+<dd><p>Get a client&#8217;s events.  Uses GET to /events/clients/&lt;client&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>client</em>: (str) Client&#8217;s ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(list) Events</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_client_id">
 <code class="descname">get_client_id</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_client_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a client&#8217;s ID
-Uses GET to /clients?name=&lt;client&gt; interface
-args:</p>
-<blockquote>
-<div>client: (str) Client&#8217;s name</div></blockquote>
-<p>return: (str) Client id</p>
+<dd><p>Get a client&#8217;s ID.  Uses GET to /clients?name=&lt;client&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>client</em>: (str) Client&#8217;s name</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(str) Client id</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_client_info">
 <code class="descname">get_client_info</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_client_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get client info
-Uses GET to /clients/&lt;client&gt; interface
-args:</p>
-<blockquote>
-<div>client: (str) Client&#8217;s ID</div></blockquote>
-<p>return (dict) Client dictionary</p>
+<dd><p>Get client info.  Uses GET to /clients/&lt;client&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>client</em>: (str) Client&#8217;s ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(dict) Client dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_clients">
 <code class="descname">get_clients</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_clients" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get list of clients.
-Uses GET to /clients interface.</p>
-<p>return: (list) List of clients.</p>
+<dd><p>Get list of clients.  Uses GET to /clients interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Kwargs:</th><td class="field-body"><ul class="first simple">
+<li><em>name</em>: (str) If specified, returns the client information for this client only.</li>
+<li><em>name_only</em>: (bool) If true, returns only the names of the clients requested</li>
+<li><em>all_enrolled</em>: (bool) If true, will return all enrolled clients</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(list) List of dictionaries with the client information as requested.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_enrollment_resource">
 <code class="descname">get_enrollment_resource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_enrollment_resource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get Client Enrollment Data.
-Uses GET to /enrollments/&lt;client&gt; interface
-args:</p>
-<blockquote>
-<div>client: (str) Client&#8217;s ID
-audio: (boolean) If True then the enrollment audio is returned.</div></blockquote>
-<p>return: (dict)</p>
+<dd><p>Get Client Enrollment Data.  Uses GET to /enrollments/&lt;client&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>client</em>: (str) Client&#8217;s ID</li>
+<li><em>audio</em>: (boolean) If True then the enrollment audio is returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(dictionary) Look <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-Enrollments-Get_enrollment_info">here</a> for information on keys and values.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_module_settings">
 <code class="descname">get_module_settings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_module_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get Module settings.
-Uses GET to /settings/modules interface
-return: (dict) module settings</p>
+<dd><p>Get Module settings.  Uses GET to /settings/modules interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(dict) Module settings as shown <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-Module_Settings-Get_the_module_settings">here</a>.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_system_settings">
 <code class="descname">get_system_settings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_system_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get system settings.
-Uses GET to /settings/system interface
-return: (dict) System settings</p>
+<dd><p>Get system settings.  Uses GET to /settings/system interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(dict) System settings as shown <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-System_Settings-Get_System_Settings">here</a>.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_verification_resource">
 <code class="descname">get_verification_resource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_verification_resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Verification Resource.  Uses GET to /verifications/&lt;resource&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>resource</em>: (str) Verification ID</li>
+<li><em>audio</em>: (boolean) If True, audio data associated with verification will be returned.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(dict) Verification data as shown <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-Verifications-Get_verification_info">here</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="knuverse.knufactor.Knufactor.get_verification_resource_secure">
+<code class="descname">get_verification_resource_secure</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_verification_resource_secure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get Verification Resource.
 Uses GET to /verifications/&lt;resource&gt; interface
-args:</p>
-<blockquote>
-<div>resource: (str) Verification ID
-audio: (boolean) If True, audio data associated with verification will be returned.</div></blockquote>
-<p>return: (dict) Verification data</p>
+Use this method rather than get_verification_resource when adding a second factor to your application.
+See <a class="reference external" href="https://cloud.knuverse.com/docs/integration/">this</a> for more information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>resource</em>: (str) Verification ID</li>
+<li><em>jwt</em>: (str) Completion token received from application</li>
+<li><em>name</em>: (str) Client name associated with the jwt. Received from application.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(dict) Verification data as shown <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-Verifications-Get_verification_info">here</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_verifications">
 <code class="descname">get_verifications</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_verifications" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get list of verifications.
-Uses GET to /verifications interface
-return: (list) verification list</p>
+<dd><p>Get list of verifications.  Uses GET to /verifications interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(list) Verification list as specified <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-Verifications-Get_verification_list">here</a>.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.get_verifications_count">
 <code class="descname">get_verifications_count</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.get_verifications_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get Verification Count.
-Uses HEAD to /verifications interface
-return: (int) Number of verifications</p>
+<dd><p>Get Verification Count.  Uses HEAD to /verifications interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(int) Number of verifications</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.refresh_auth">
-<code class="descname">refresh_auth</code><span class="sig-paren">(</span><em>username=None</em>, <em>password=None</em>, <em>account=None</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.refresh_auth" title="Permalink to this definition">¶</a></dt>
-<dd><p>Renew authentication token manually.
-Uses POST to /auth interface</p>
+<code class="descname">refresh_auth</code><span class="sig-paren">(</span><em>apikey=None</em>, <em>secret=None</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.refresh_auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renew authentication token manually.  Uses POST to /auth interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>apikey</strong> (<em>str or None</em>) &#8211; Unique identifier for authorized use of the API</li>
+<li><strong>secret</strong> (<em>str or None</em>) &#8211; The secret password corresponding to the API key.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.remove_verification_resource">
 <code class="descname">remove_verification_resource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.remove_verification_resource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove verification
-Uses DELETE to /verifications/&lt;resource&gt; interface
-args:</p>
-<blockquote>
-<div>resource: (str) Verification ID</div></blockquote>
+<dd><p>Remove verification.  Uses DELETE to /verifications/&lt;resource&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li><em>resource</em>: (str) Verification ID</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.reset_module_settings">
 <code class="descname">reset_module_settings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.reset_module_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the module settings back to default.
-Uses DELETE to /settings/modules interface</p>
+<dd><p>Resets the module settings back to default.  Uses DELETE to /settings/modules interface.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.reset_system_settings">
 <code class="descname">reset_system_settings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.reset_system_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the system settings back to default.
-Uses DELETE to /settings/system interface</p>
+<dd><p>Resets the system settings back to default.  Uses DELETE to /settings/system interface.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.set_module_settings">
 <code class="descname">set_module_settings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.set_module_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set Module settings.
-Uses PUT to /settings/modules interface
-Args:</p>
-<blockquote>
-<div>See API documentation for argument details</div></blockquote>
+<dd><p>Set Module settings.  Uses PUT to /settings/modules interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>mode_audiopin_enable</em>: (bool) Turn on and off the AudioPIN feature</li>
+<li><em>mode_audiopass_enable</em>: (bool) Turn on and off the AudioPass feature</li>
+<li><em>mode_default</em>: (str)  Set the default verification mode.  Either &#8216;audiopin&#8217; or &#8216;audiopass&#8217;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.set_system_settings">
 <code class="descname">set_system_settings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.set_system_settings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set system settings.
-Uses PUT to /settings/system interface
-args:</p>
-<blockquote>
-<div>data: (dict) settings and values to set</div></blockquote>
+<dd><p>Set system settings.  Uses PUT to /settings/system interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>data</em>: (dict) Settings dictionary as specified <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-System_Settings-Set_System_Settings">here</a>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.start_enrollment">
 <code class="descname">start_enrollment</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.start_enrollment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start Client Enrollment.
-Uses the POST to /enrollments interface</p>
-<dl class="docutils">
-<dt>args:</dt>
-<dd>client: (str) Client&#8217;s Name
-pin: (str) Client&#8217;s PIN. 4 digit string
-phone_number (str) Phone number to call.</dd>
-</dl>
-<p>return: (dict) Enrollment record with prompts</p>
+<dd><p>Start Client Enrollment.  Uses the POST to /enrollments interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>client</em>: (str) Client&#8217;s Name</li>
+<li><em>pin</em>: (str) Client&#8217;s PIN. 4 digit string</li>
+<li><em>phone_number</em>: (str) Phone number to call.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(dict) Enrollment record with prompts as described <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-Enrollments-Start_enrollment">here</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.start_verification">
 <code class="descname">start_verification</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.start_verification" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start a verification.
-Uses POST to /verifications interface</p>
-<dl class="docutils">
-<dt>args:</dt>
-<dd>client: (str) Client&#8217;s Name
-verification_speed: (int) Allowed values: 0, 25, 50, 75, 100
-row_doubling (str) Allowed values: &#8220;off&#8221;, &#8220;train&#8221;, &#8220;on&#8221;
-phone_number (str) Phone number to call.</dd>
-</dl>
-<p>returns: (dict) verification record with animation.</p>
+<dd><p>Start a verification.  Uses POST to /verifications interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>client</em>: (str) Client&#8217;s Name</li>
+<li><em>verification_speed</em>: (int) Allowed values: 0, 25, 50, 75, 100</li>
+<li><em>row_doubling</em>: (str) Allowed values: &#8220;off&#8221;, &#8220;train&#8221;, &#8220;on&#8221;</li>
+<li><em>phone_number</em>: (str) Phone number to call.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(dict) Verification record with animation as discussed <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-Verifications-Start_verification">here</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.status">
 <code class="descname">status</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get server status
-Uses GET to /status interface</p>
-<p>returns: (dict) Server status</p>
+<dd><p>Get server status.  Uses GET to /status interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(dict) Server status as described <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-General-Status">here</a>.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.unenroll_client">
 <code class="descname">unenroll_client</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.unenroll_client" title="Permalink to this definition">¶</a></dt>
-<dd><p>Unenroll a client
-Uses DELETE to /clients/&lt;client&gt; interface
-args:</p>
+<dd><p>Unenroll a client.  Uses DELETE to /clients/&lt;client&gt; interface.
+:Args:</p>
 <blockquote>
-<div>client: (str) Client&#8217;s ID</div></blockquote>
+<div><ul class="simple">
+<li><em>client</em>: (str) Client&#8217;s ID</li>
+</ul>
+</div></blockquote>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.update_client_info">
 <code class="descname">update_client_info</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.update_client_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update client info
-Uses PUT to /clients/&lt;client&gt; interface
-args:</p>
-<blockquote>
-<div>client: (str) Client&#8217;s ID
-See API documentation for other arguments</div></blockquote>
+Uses PUT to /clients/&lt;client&gt; interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first simple">
+<li><em>client</em>: (str) Client&#8217;s ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Kwargs:</th><td class="field-body"><ul class="first simple">
+<li><em>reason</em>: (str) The reason for changing the client&#8217;s settings</li>
+<li><em>pin</em>: (str) The new PIN to set</li>
+<li><em>current_pin</em>: (str) The current PIN of the user. Only required if role is not admin and the Account Reset Mode (System Configuration) requires PIN.</li>
+<li><em>verification_speed</em>: (int) The speed at which the verification should appear for the client.  Allowed values: 0, 25, 50, 75, 100.</li>
+<li><em>row_doubling</em>: (str) Row doubling is an AudioPIN only option that puts two rows of words in each pinpad digit.  Allowed values: &#8220;OFF&#8221;, &#8220;TRAIN&#8221;, &#8220;ON&#8221;</li>
+<li><em>password</em>: (str) New client password</li>
+<li><em>bypass_expiration</em>: (int) Used to enable/disable a client&#8217;s bypass. The time, in minutes, from when the request was received until the bypass expires. 0 removes the bypass, while -1 sets a bypass that doesn&#8217;t expire.</li>
+<li><em>bypass_limit</em>: (int) The number of times a user may bypass. Set to 0 for no limit. If set without either an existing valid bypass_expiration, or providing one in the request, the client&#8217;s bypass_expiration will be set to 10 mins.  Default value: 0.  Size range: &gt;=0</li>
+<li><em>bypass_spacing_minutes</em>: (int) Specifies the time, in minutes, the user must wait between using each bypass. Set to 0 for no bypass rate limiting. If set without either an existing valid bypass_expiration, or providing one in the request, the client&#8217;s bypass_expiration will be set to 10 mins.</li>
+<li><em>bypass_code</em>: (str) The code that the client must enter to bypass.</li>
+<li><em>is_disabled</em>: (bool) If true, the client cannot do verifications (will automatically bypass).</li>
+<li><em>verification_lock</em>: (bool) Unlocks the given client if the client verified incorrectly too many times.</li>
+<li><em>password_lock</em>: (bool) Set to false to unlock a client who enter thier password incorrectly too many times.</li>
+<li><em>enroll_deadline_extension_minutes</em>: (int) Amount of time, in minutes, to extend an enrollment deadline by.</li>
+<li><em>enroll_deadline_enable</em>: (bool) When true, enables the enrollment deadline for a certain client, when false disables an enrollment deadline.</li>
+<li><em>windows_profile</em>: (str) Assigns a Windows Profile to the user using the Windows Profile ID. To remove a profile, send null.</li>
+<li><em>role_rationale</em>: (str) Update the client rationale for a role</li>
+<li><em>role</em>: (str) Update the client role. Note: Google users cannot have their role updated.  Allowed values: &#8220;admin&#8221;, &#8220;manager&#8221;, &#8220;support&#8221;, &#8220;user&#8221;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">More information:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first last">Can be found <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-Clients-Update_client_information">here</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.upload_enrollment_resource">
 <code class="descname">upload_enrollment_resource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.upload_enrollment_resource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Upload Enrollment Data.
-Uses PUT to /enrollments/&lt;enrollment_id&gt; interface</p>
-<dl class="docutils">
-<dt>args:</dt>
-<dd>enrollment_id: (str) Enrollment&#8217;s ID
-audio_file: (str) Path to the audio file of the recorded words. Not required for phone enrollments.</dd>
-</dl>
+<dd><p>Upload Enrollment Data.  Uses PUT to /enrollments/&lt;enrollment_id&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li><em>enrollment_id</em>: (str) Enrollment&#8217;s ID</li>
+<li><em>audio_file</em>: (str) Path to the audio file of the recorded words. Not required for phone enrollments.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.upload_verification_resource">
 <code class="descname">upload_verification_resource</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.upload_verification_resource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Upload verification data.
-Uses PUT to /verfications/&lt;resource&gt; interface</p>
-<dl class="docutils">
-<dt>args:</dt>
-<dd>resource: (str) Verification ID
-audio_file: (str) Path to the audio file of the recorded words. Not required for phone verifications.
-bypass: (boolean) True if using a bypass code or pin to verify
-bypass_pin: (str) Client&#8217;s PIN if this is a bypass
-bypass_code: (str) Client&#8217;s bypass code if this is a bypass</dd>
-</dl>
+<dd><p>Upload verification data.  Uses PUT to /verfications/&lt;resource&gt; interface</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li><em>resource</em>: (str) Verification ID</li>
+<li><em>audio_file</em>: (str) Path to the audio file of the recorded words. Not required for phone verifications.</li>
+<li><em>bypass</em>: (boolean) True if using a bypass code or pin to verify</li>
+<li><em>bypass_pin</em>: (str) Client&#8217;s PIN if this is a bypass</li>
+<li><em>bypass_code</em>: (str) Client&#8217;s bypass code if this is a bypass</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.validate_password">
 <code class="descname">validate_password</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.validate_password" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validate client&#8217;s password
-Uses PUT to /clients/&lt;client&gt; interface
-Args:</p>
-<blockquote>
-<div>client: (str) Client&#8217;s ID
-password: (str) Client&#8217;s Password</div></blockquote>
+<dd><p>Validate client&#8217;s password.  Uses PUT to /clients/&lt;client&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li><em>client</em>: (str) Client&#8217;s ID</li>
+<li><em>password</em>: (str) Client&#8217;s Password</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.validate_pin">
 <code class="descname">validate_pin</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.validate_pin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Validate client&#8217;s PIN
-Uses PUT to /clients/&lt;client&gt; interface
-Args:</p>
-<blockquote>
-<div>client: (str) Client&#8217;s ID
-pin: (str) Client&#8217;s PIN</div></blockquote>
+<dd><p>Validate client&#8217;s PIN.  Uses PUT to /clients/&lt;client&gt; interface.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Args:</th><td class="field-body"><ul class="first last simple">
+<li><em>client</em>: (str) Client&#8217;s ID</li>
+<li><em>pin</em>: (str) Client&#8217;s PIN</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="knuverse.knufactor.Knufactor.warnings">
 <code class="descname">warnings</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor.warnings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get server system warnings
-Uses GET to /status/warnings</p>
-<p>returns: (dict) Server messages and warnings</p>
+<dd><p>Get server system warnings.  Uses GET to /status/warnings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(dict) Server messages and warnings as described <a class="reference external" href="https://cloud.knuverse.com/docs/api/#api-General-Warnings">here</a>.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
