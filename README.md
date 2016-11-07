@@ -4,6 +4,8 @@ This project is a Python SDK that allows developers to create apps that use Knuv
 
 Documentation for the API can be found [here](https://cloud.knuverse.com/docs/) <br />
 
+Documentation for the SDK can be found [here](https://knuverse.github.io/knuverse-sdk-python/) <br />
+
 Quick Start
 -----------
 First, install the knuverse-sdk:
