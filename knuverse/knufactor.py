@@ -408,7 +408,6 @@ class Knufactor:
                            verification_speed=None,
                            row_doubling=None,
                            password=None,
-                           bypass_enabled=None,
                            bypass_expiration=None,
                            bypass_limit=None,
                            bypass_spacing_minutes=None,
@@ -445,8 +444,6 @@ class Knufactor:
         if password is not None:
             body["auth_password"] = self._password
             body["password"] = password
-        if bypass_enabled is not None:
-            body["bypass_enabled"] = bypass_enabled
         if bypass_expiration is not None:
             body["bypass_expiration"] = bypass_expiration
         if bypass_limit is not None:
