@@ -2,6 +2,7 @@
 # Authentication
 auth = "auth"
 auth_refresh = "auth/refresh"
+auth_grant = "auth/grant"
 
 # Clients
 clients = "clients"
