@@ -9,61 +9,10 @@ from functools import wraps
 from datetime import datetime, timedelta
 
 from .data import url
+from . import exceptions as ex
 requests.packages.urllib3.disable_warnings()
 
 
-class RequestException(Exception):
-    """
-    Used for invalid requests.
-    """
-
-
-class UnexpectedResponseCodeException(Exception):
-    """
-    Raised when the server returns an unexpected response code.
-    """
-
-
-class HttpErrorException(Exception):
-    """
-    Used for HTTP errors. Status codes >= 400
-    """
-
-
-class BadRequestException(HttpErrorException):
-    """
-    Used for HTTP Bad Request(400) Errors
-    """
-
-
-class UnauthorizedException(HttpErrorException):
-    """
-    Used for HTTP Unauthorized(401) Errors
-    """
-
-
-class ForbiddenException(HttpErrorException):
-    """
-    Used for HTTP Forbidden(403) Errors
-    """
-
-
-class NotFoundException(HttpErrorException):
-    """
-    Used for HTTP Not Found(404) Errors
-    """
-
-
-class RateLimitedException(HttpErrorException):
-    """
-    Used for HTTP Rate Limited(429) Errors
-    """
-
-
-class InternalServerErrorException(HttpErrorException):
-    """
-    Used for HTTP Internal Server Error(500) Errors
-    """
 
 
 class Knufactor:
@@ -186,25 +135,25 @@ class Knufactor:
             return
 
         if response_code < 400:
-            raise UnexpectedResponseCodeException(response.text)
+            raise ex.UnexpectedResponseCodeException(response.text)
 
         elif response_code == 401:
-            raise UnauthorizedException(response.text)
+            raise ex.UnauthorizedException(response.text)
 
         elif response_code == 400:
-            raise BadRequestException(response.text)
+            raise ex.BadRequestException(response.text)
 
         elif response_code == 403:
-            raise ForbiddenException(response.text)
+            raise ex.ForbiddenException(response.text)
 
         elif response_code == 404:
-            raise NotFoundException(response.text)
+            raise ex.NotFoundException(response.text)
 
         elif response_code == 429:
-            raise RateLimitedException(response.text)
+            raise ex.RateLimitedException(response.text)
 
         else:
-            raise InternalServerErrorException(response.text)
+            raise ex.InternalServerErrorException(response.text)
 
     def _get_client_id(self, client):
 
@@ -213,7 +162,7 @@ class Knufactor:
             client = self.get_client_id(client)
 
         if not client:
-            raise NotFoundException("%s not found." % client)
+            raise ex.NotFoundException("%s not found." % client)
 
         return client
 
