@@ -59,38 +59,76 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-knuverse.knufactor">
-<span id="knuverse-knufactor-module"></span><h2>knuverse.knufactor module<a class="headerlink" href="#module-knuverse.knufactor" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2014, Intellisis
-All rights reserved.</p>
+<div class="section" id="module-knuverse.exceptions">
+<span id="knuverse-exceptions-module"></span><h2>knuverse.exceptions module<a class="headerlink" href="#module-knuverse.exceptions" title="Permalink to this headline">¶</a></h2>
 <dl class="exception">
-<dt id="knuverse.knufactor.BadRequestException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">BadRequestException</code><a class="headerlink" href="#knuverse.knufactor.BadRequestException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#knuverse.knufactor.HttpErrorException" title="knuverse.knufactor.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.knufactor.HttpErrorException</span></code></a></p>
+<dt id="knuverse.exceptions.BadRequestException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">BadRequestException</code><a class="headerlink" href="#knuverse.exceptions.BadRequestException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#knuverse.exceptions.HttpErrorException" title="knuverse.exceptions.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.exceptions.HttpErrorException</span></code></a></p>
 <p>Used for HTTP Bad Request(400) Errors</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="knuverse.knufactor.ForbiddenException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">ForbiddenException</code><a class="headerlink" href="#knuverse.knufactor.ForbiddenException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#knuverse.knufactor.HttpErrorException" title="knuverse.knufactor.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.knufactor.HttpErrorException</span></code></a></p>
+<dt id="knuverse.exceptions.ForbiddenException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">ForbiddenException</code><a class="headerlink" href="#knuverse.exceptions.ForbiddenException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#knuverse.exceptions.HttpErrorException" title="knuverse.exceptions.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.exceptions.HttpErrorException</span></code></a></p>
 <p>Used for HTTP Forbidden(403) Errors</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="knuverse.knufactor.HttpErrorException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">HttpErrorException</code><a class="headerlink" href="#knuverse.knufactor.HttpErrorException" title="Permalink to this definition">¶</a></dt>
+<dt id="knuverse.exceptions.HttpErrorException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">HttpErrorException</code><a class="headerlink" href="#knuverse.exceptions.HttpErrorException" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
 <p>Used for HTTP errors. Status codes &gt;= 400</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="knuverse.knufactor.InternalServerErrorException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">InternalServerErrorException</code><a class="headerlink" href="#knuverse.knufactor.InternalServerErrorException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#knuverse.knufactor.HttpErrorException" title="knuverse.knufactor.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.knufactor.HttpErrorException</span></code></a></p>
+<dt id="knuverse.exceptions.InternalServerErrorException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">InternalServerErrorException</code><a class="headerlink" href="#knuverse.exceptions.InternalServerErrorException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#knuverse.exceptions.HttpErrorException" title="knuverse.exceptions.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.exceptions.HttpErrorException</span></code></a></p>
 <p>Used for HTTP Internal Server Error(500) Errors</p>
 </dd></dl>
 
+<dl class="exception">
+<dt id="knuverse.exceptions.NotFoundException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">NotFoundException</code><a class="headerlink" href="#knuverse.exceptions.NotFoundException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#knuverse.exceptions.HttpErrorException" title="knuverse.exceptions.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.exceptions.HttpErrorException</span></code></a></p>
+<p>Used for HTTP Not Found(404) Errors</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="knuverse.exceptions.RateLimitedException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">RateLimitedException</code><a class="headerlink" href="#knuverse.exceptions.RateLimitedException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#knuverse.exceptions.HttpErrorException" title="knuverse.exceptions.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.exceptions.HttpErrorException</span></code></a></p>
+<p>Used for HTTP Rate Limited(429) Errors</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="knuverse.exceptions.RequestException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">RequestException</code><a class="headerlink" href="#knuverse.exceptions.RequestException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<p>Used for invalid requests.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="knuverse.exceptions.UnauthorizedException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">UnauthorizedException</code><a class="headerlink" href="#knuverse.exceptions.UnauthorizedException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#knuverse.exceptions.HttpErrorException" title="knuverse.exceptions.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.exceptions.HttpErrorException</span></code></a></p>
+<p>Used for HTTP Unauthorized(401) Errors</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="knuverse.exceptions.UnexpectedResponseCodeException">
+<em class="property">exception </em><code class="descclassname">knuverse.exceptions.</code><code class="descname">UnexpectedResponseCodeException</code><a class="headerlink" href="#knuverse.exceptions.UnexpectedResponseCodeException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
+<p>Raised when the server returns an unexpected response code.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-knuverse.knufactor">
+<span id="knuverse-knufactor-module"></span><h2>knuverse.knufactor module<a class="headerlink" href="#module-knuverse.knufactor" title="Permalink to this headline">¶</a></h2>
+<p>Copyright 2014, Intellisis
+All rights reserved.</p>
 <dl class="class">
 <dt id="knuverse.knufactor.Knufactor">
 <em class="property">class </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">Knufactor</code><span class="sig-paren">(</span><em>apikey</em>, <em>secret</em>, <em>server='https://cloud.knuverse.com'</em>, <em>base_uri='/api/v1/'</em><span class="sig-paren">)</span><a class="headerlink" href="#knuverse.knufactor.Knufactor" title="Permalink to this definition">¶</a></dt>
@@ -805,41 +843,6 @@ Uses PUT to /clients/&lt;client&gt; interface</p>
 
 </dd></dl>
 
-<dl class="exception">
-<dt id="knuverse.knufactor.NotFoundException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">NotFoundException</code><a class="headerlink" href="#knuverse.knufactor.NotFoundException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#knuverse.knufactor.HttpErrorException" title="knuverse.knufactor.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.knufactor.HttpErrorException</span></code></a></p>
-<p>Used for HTTP Not Found(404) Errors</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="knuverse.knufactor.RateLimitedException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">RateLimitedException</code><a class="headerlink" href="#knuverse.knufactor.RateLimitedException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#knuverse.knufactor.HttpErrorException" title="knuverse.knufactor.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.knufactor.HttpErrorException</span></code></a></p>
-<p>Used for HTTP Rate Limited(429) Errors</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="knuverse.knufactor.RequestException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">RequestException</code><a class="headerlink" href="#knuverse.knufactor.RequestException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
-<p>Used for invalid requests.</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="knuverse.knufactor.UnauthorizedException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">UnauthorizedException</code><a class="headerlink" href="#knuverse.knufactor.UnauthorizedException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#knuverse.knufactor.HttpErrorException" title="knuverse.knufactor.HttpErrorException"><code class="xref py py-class docutils literal"><span class="pre">knuverse.knufactor.HttpErrorException</span></code></a></p>
-<p>Used for HTTP Unauthorized(401) Errors</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="knuverse.knufactor.UnexpectedResponseCodeException">
-<em class="property">exception </em><code class="descclassname">knuverse.knufactor.</code><code class="descname">UnexpectedResponseCodeException</code><a class="headerlink" href="#knuverse.knufactor.UnexpectedResponseCodeException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></code></p>
-<p>Raised when the server returns an unexpected response code.</p>
-</dd></dl>
-
 </div>
 <div class="section" id="module-knuverse">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-knuverse" title="Permalink to this headline">¶</a></h2>
@@ -857,6 +860,7 @@ Uses PUT to /clients/&lt;client&gt; interface</p>
 <li><a class="reference internal" href="#">knuverse package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-knuverse.exceptions">knuverse.exceptions module</a></li>
 <li><a class="reference internal" href="#module-knuverse.knufactor">knuverse.knufactor module</a></li>
 <li><a class="reference internal" href="#module-knuverse">Module contents</a></li>
 </ul>

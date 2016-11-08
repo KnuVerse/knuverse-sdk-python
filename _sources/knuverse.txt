@@ -11,6 +11,14 @@ Subpackages
 Submodules
 ----------
 
+knuverse.exceptions module
+--------------------------
+
+.. automodule:: knuverse.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 knuverse.knufactor module
 -------------------------
 
