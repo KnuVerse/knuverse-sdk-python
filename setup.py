@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='knuverse',
-    version='1.0.7',
+    version='1.0.8',
     description='A Python SDK for interfacing with KnuVerse Cloud APIs',
     long_description=open('README.md').read(),
     url='https://github.com/KnuVerse/knuverse-sdk-python',

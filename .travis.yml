@@ -1,0 +1,10 @@
+deploy:
+  provider: pypi
+  user: zsells
+  password:
+    secure: ONjyx9fk+ZHGjFl0VU/HYOp/lupOOOJJGHgK/VDR+p0SfCkgRwu2YIGU0LkmFVfzoEJgfaRO1kS0wbb4SJuBp8zOT+PszyNs3pWTNM2WYND4xyJh/RBv0WQv76NU/j+70VpfgAN9RHayIMCYO4xTWuY4TDuyahbSo55EM0GTM2ft9MZZZjndDU6mfBA2ozLWJOYEq79K78BRO24yerpC4zRbK8qd3PSIU8uUqFdVetq9r2kLPW9M++YuadVeA7VIKyRkBzN4BJdHQZqzO2xa8a/wY3IQK18ZwYkYWydTTvZcl+gvpkgSrRVs+20gkJobcFBOyk8lzD1Sz1K7AcYJJv14p5Zzws5THys/HuapC/QN5fsuy3k7diFD2uK+OaLotVLtHiYs3P7S/D+EdVlSsEge0qLhUt5pvlHc5kE5BWDgbW0uJ8gZl/TppDVjdRG5okD/eOiemzVVAPRIIaKyHNGJm2qLSb5t78KElqc9i68y6qtm4iVH2ypsJTyehR/4IghcRrTJ8m5nLj35xHKOU1xFxPq2ScWxsCQ8SOXU9Mk95r338+3F23UjSoy3MPpD4rUaqlpx8oRuBjf5lM7H+k96VkaQej2a6RPvfmOSTNZij7LTGF3iJ3Ivf6AbkvCTob4AWBmg9MxwrM7ZCc6xEfhsiCzubUhRv6b9AtdyMQQ=
+  on:
+    branch: master
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: KnuVerse/knuverse-sdk-python
