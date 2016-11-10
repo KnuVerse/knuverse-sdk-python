@@ -22,7 +22,7 @@ api = Knufactor(
     <api_key>,
     <secret>
 )
-for client in api.get_clients():
+for client in api.client_list():
     print "%s: %s" % (client.get("name"), client.get("state"))
 ```
 
