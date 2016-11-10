@@ -160,8 +160,6 @@ def _words_list_to_file(anim_words):
     """
     Creates an audio file from the words specified in the given list
     """
-    _, out_file = tempfile.mkstemp(suffix=".mp3")
-
     anim_files = [os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
         "audio",
