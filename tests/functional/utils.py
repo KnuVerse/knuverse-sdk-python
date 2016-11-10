@@ -3,6 +3,8 @@ import tempfile
 import subprocess
 import os
 
+from pydub import AudioSegment
+
 POSS_WORDS = ['Chicago', 'Boston', 'Dallas', 'Atlanta', 'Denver',
               'Seattle', 'Nashville', 'Baltimore', 'Orlando', 'Cleveland'
 ]
@@ -168,12 +170,9 @@ def _words_list_to_file(anim_words):
         for word in anim_words
     ]
 
-    # Lets try using sox for now to avoid numpy dependendencies
-    command = "sox {} {}".format(
-        " ".join(anim_files),
-        out_file
-    )
+    out_audio = AudioSegment.from_mp3(anim_files[0])
+    for word_file in anim_files[1:]:
+        out_audio += AudioSegment.from_mp3(word_file)
+    out_file = out_audio.export("/tmp/file.mp3", format="mp3")
 
-    subprocess.call(command, shell=True)
-
-    return out_file
+    return "/tmp/file.mp3"
