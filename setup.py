@@ -29,5 +29,5 @@ setup(
     keywords='api sdk knuverse cloud voice authentication audiopin audiopass',
 
     install_requires=['requests'],
-    packages=find_packages(exclude=['examples'])
+    packages=find_packages(exclude=['examples', 'tests'])
 )

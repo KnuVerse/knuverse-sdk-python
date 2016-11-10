@@ -1,3 +1,12 @@
+language: python
+python:
+- '2.7'
+- '3.3'
+sudo: false
+install:
+- pip install -r requirments.txt
+- pip install -e .
+scripts: py.test tests/
 deploy:
   provider: pypi
   user: zsells
@@ -8,3 +17,7 @@ deploy:
     tags: true
     distributions: sdist bdist_wheel
     repo: KnuVerse/knuverse-sdk-python
+env:
+  global:
+  - secure: wvyZvvruJLDlizptBEDH8F7on41p5GMF+hFWVooKh3yB/ooopwxuC62nDos02s7EBGFu6t10uQ6Z0v2GQVyN+/R6iQcpvIP9P/Fm06afVEwmLb7GlD8iC2YIxVY5XibZKreBbZqVTidB3P2u3FldtYAuNXUVpvaYQC8C5uFPAg2sT/JzEo0lvWjMwZa20JHfILeU7Z82N2OV9lj/+uI/bksKOWe72wiRWjW8/nbN6DNmBusDkwxNwu6wapfowT1DWYHzV0rlfMPGEkShuKW7uUrDAgxDLZEHOnfRFNi1QpsT+VlkTGBBMiiy4TO5L//u8IkTK4W8zsK5WitwtBrCv2+leIuJ2QPvLUpaE3mbCw0I+j0GwscljrkZQDvhmuwkY78WJMKXLN1KZE6QIUodcj+edcS0lNSHj3aPfpmGYlAypL6nF0vdE9DmFmsiQSU0EJGOgAtxaOoRTrM62Y+H/Xh7ZWoEu7mMq1AFlauPq5Ggs46N2EcuXkNLOEz5YHKcehpTc6iUyENTgWdEqPq2mBYXkkvMHqrvgxmzGDWEu6FPsG5f6nfhEtfi/wr5YYF9OvsaJqnpaHjeG8OgUTTzl/iCt0bxD2uAtCRqEowFW1XDdYPQSB3GxuwRtPQ0wiJNMnI/1C4dSO9Q5LtFxx3arHk1oyz/k2HEagi6iukuOsI=
+  - secure: TbM6BGcFO+1kDWVdTSRJ5TP4rPR0FbdQ76JLRRYpq5+vRXC5N9NpHvvzoTBrcuHn6NZKWWNKuhB6K9yxocHCiQTw2fJZtj4Eaxs8ILh5sCnEGYkld4Cjq+b9/b2KoXmhpPfLrJHysecZhr2El5ByU4XQiQGhvxUU487R+ryypcLceXhSm9LbaylqeXrlvyZly/JnivD2Ha4rU7lxefc7YD9pYuKswUu82gfYOCZGgWNPaKh1F6F+JbkfArSgQrZhqNApw1kcUuKyNslP+qs8yeRlrmG91SWy0ICpwVr6HOygIvUaw5FWiKK44G0Fj73fVCiC+XqBIZsqlIJhudq23nW6URqZ6jICpIv27G4q/GUNeGP+56lyjF1e2UpCi2Ue0owBYRwGIeEN/eq47yx7OpWSfiuvnVMJOzw75nehd1uckew7fGMWQNxfXYX9upUiVuuq/FKWHB8hVzSuGHqbFstH7lpuH6v1jdWzoIKfhwscdaErc4KKYXdPNvKEupVCFbaDAq16yUyO9f8l6umg2P+oswyLWaMRiQWO3MkxcZlS6tR/qCEVmmQLjX17O+m7snQjOp3hV5a+h1lrMtvX8w8+0ZB5RccTdB4YWtP7RNljxrRWdgf2Gh0r/6bSmtQxq7adRpXdvMRwG3rNTaIZmaZp+2gUCj9ruxtaJOnYWpU=
