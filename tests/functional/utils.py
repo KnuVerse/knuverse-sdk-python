@@ -163,14 +163,14 @@ def _words_list_to_file(anim_words):
     anim_files = [os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
         "audio",
-        word.lower() + ".mp3"
+        word.lower() + ".wav"
         )
         for word in anim_words
     ]
 
-    out_audio = AudioSegment.from_mp3(anim_files[0])
+    out_audio = AudioSegment.from_wav(anim_files[0])
     for word_file in anim_files[1:]:
-        out_audio += AudioSegment.from_mp3(word_file)
-    out_file = out_audio.export("/tmp/file.mp3", format="mp3")
+        out_audio += AudioSegment.from_wav(word_file)
+    out_file = out_audio.export("/tmp/file.wav", format="wav")
 
-    return "/tmp/file.mp3"
+    return "/tmp/file.wav"
