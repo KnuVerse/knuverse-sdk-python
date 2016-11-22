@@ -2,12 +2,17 @@ import time
 import tempfile
 import subprocess
 import os
+import random
+import string
 
 from pydub import AudioSegment
 
 POSS_WORDS = ['Chicago', 'Boston', 'Dallas', 'Atlanta', 'Denver',
               'Seattle', 'Nashville', 'Baltimore', 'Orlando', 'Cleveland'
 ]
+
+def random_name():
+    return "sdk-test-%s" % ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
 
 def enroll_user(sdk, user, pin, all_words_same=False):
     """
@@ -127,7 +132,6 @@ def verify_audiopass(sdk, user, num_words_wrong=0):
         ver_rec['verification_id'],
         audio_file=audio_file
     )
-    os.remove(audio_file)
 
     # Wait for verification response
     while True:
@@ -141,6 +145,7 @@ def verify_audiopass(sdk, user, num_words_wrong=0):
 
         time.sleep(0.1)
 
+    os.remove(audio_file)
     if ver_info['state'] == "completed":
         # It was rejected
         rr = ver_info['rejection_reason']
