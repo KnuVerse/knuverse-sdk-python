@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/KnuVerse/knuverse-sdk-python.png?branch=master)](https://travis-ci.org/KnuVerse/knuverse-sdk-python)
+
 # knuverse-sdk-python
 
 This project is a Python SDK that allows developers to create apps that use Knuverse's Cloud APIs.
