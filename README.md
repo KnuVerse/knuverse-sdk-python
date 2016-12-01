@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/KnuVerse/knuverse-sdk-python.png?branch=master)](https://travis-ci.org/KnuVerse/knuverse-sdk-python)
+[![PyPI](https://img.shields.io/pypi/v/knuverse.svg)](https://pypi.python.org/pypi/knuverse)
 
 # knuverse-sdk-python
 
