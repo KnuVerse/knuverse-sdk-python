@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/KnuVerse/knuverse-sdk-python.png?branch=master)](https://travis-ci.org/KnuVerse/knuverse-sdk-python)
 [![PyPI](https://img.shields.io/pypi/v/knuverse.svg)](https://pypi.python.org/pypi/knuverse)
+[![Documentation Status](https://readthedocs.org/projects/knuverse-sdk-python/badge/?version=latest)](http://knuverse-sdk-python.readthedocs.io/en/latest/?badge=latest)
 
 # knuverse-sdk-python
 
@@ -7,7 +8,7 @@ This project is a Python SDK that allows developers to create apps that use Knuv
 
 Documentation for the API can be found [here](https://cloud.knuverse.com/docs/) <br />
 
-Documentation for the SDK can be found [here](https://knuverse.github.io/knuverse-sdk-python/py-modindex.html) <br />
+Documentation for the SDK can be found [here](https://knuverse-sdk-python.readthedocs.io/en/latest/?) <br />
 
 Quick Start
 -----------
