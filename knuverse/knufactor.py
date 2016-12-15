@@ -202,11 +202,14 @@ class Knufactor:
     @_auth
     def auth_grant(self, client, role=None, mode=None):
         """
-        Used to get a grant token.  Grant tokens expire after 1 minute.
-        Grant tokens can be used to start verifications.  Uses POST to /auth/grant interface
+        Used to get a grant token.  Grant tokens expire after 5 minutes for role "grant_verify" and 10 minutes for the
+        "grant_enroll" and "grant_enroll_verify" roles. Grant tokens can be used to start enrollments and verifications.
+        Uses POST to /auth/grant interface
 
         :Args:
           * *client*: (str) Client name
+
+        :Kwargs:
           * *role*: (str or None) The grant token role. Can be "grant_verify", "grant_enroll", or "grant_enroll_verify". If role is not sent in, the role defaults to "grant_verify".
           * *mode*: (str or None) The mode to perform actions with. Can be "audiopass" or "audiopin". It defaults to the module setting's "mode_default" if None is passed in.
 
