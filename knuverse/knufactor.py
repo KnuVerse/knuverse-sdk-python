@@ -3,6 +3,7 @@ Copyright 2014, Intellisis
 All rights reserved.
 """
 import os
+import sys
 import re
 import requests
 from functools import wraps
@@ -501,7 +502,7 @@ class Knufactor:
 
         :Args:
             * *client*: (str) Client's Name
-            * *mode*: (str) Enrollment type. Allowed values: "audiopin", "audiopass"
+            * *mode*: (str) DEPRECATED. Presence of PIN is used to determine mode (AudioPass vs AudioPIN)
             * *pin*: (str) Client's PIN. 4 digit string
             * *phone_number*: (str) Phone number to call.
 
@@ -512,7 +513,8 @@ class Knufactor:
         }
 
         if mode:
-            data["mode"] = mode
+            print('WARNING: The "mode" parameter for enrollment_start is DEPRECATED and will be ignored.  To avoid '
+                  'incompatibility with a future release please stop providing it.', file=sys.stderr)
         if pin:
             data["pin"] = pin
         if phone_number:
