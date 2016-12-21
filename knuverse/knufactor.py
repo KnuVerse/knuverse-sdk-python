@@ -513,8 +513,7 @@ class Knufactor:
         }
 
         if mode:
-            print('WARNING: The "mode" parameter for enrollment_start is DEPRECATED and will be ignored.  To avoid '\
-                  'incompatibility with a future release please stop providing it.', file=sys.stderr)
+            print('WARNING: The "mode" parameter for enrollment_start is DEPRECATED and will be ignored.  To avoid incompatibility with a future release please stop providing it.', file=sys.stderr)
         if pin:
             data["pin"] = pin
         if phone_number:
