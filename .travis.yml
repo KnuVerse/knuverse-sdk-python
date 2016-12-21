@@ -6,7 +6,8 @@ sudo: false
 install:
 - pip install -r requirements.txt
 - pip install -e .
-script: py.test tests/
+script:
+   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then py.test tests/; fi'
 deploy:
   provider: pypi
   user: zsells
