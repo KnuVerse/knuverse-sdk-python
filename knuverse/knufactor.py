@@ -2,6 +2,7 @@
 Copyright 2014, Intellisis
 All rights reserved.
 """
+from __future__ import print_function
 import os
 import sys
 import re
@@ -11,7 +12,6 @@ from datetime import datetime, timedelta
 
 from .data import url
 from . import exceptions as ex
-requests.packages.urllib3.disable_warnings()
 
 
 class Knufactor:
@@ -513,8 +513,9 @@ class Knufactor:
         }
 
         if mode:
-            print('WARNING: The "mode" parameter for enrollment_start is DEPRECATED and will be ignored.  '
-                  'To avoid incompatibility with a future release please stop providing it.', file=sys.stderr)
+            warning_msg = 'WARNING: The "mode" parameter for enrollment_start is DEPRECATED and will be ignored. ' \
+                          'To avoid incompatibility with a future release please stop providing it.'
+            print(warning_msg, file=sys.stderr)
         if pin:
             data["pin"] = pin
         if phone_number:
