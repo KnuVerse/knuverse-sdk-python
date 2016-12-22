@@ -62,7 +62,7 @@ class Knufactor:
         if not headers:
             headers = {}
         headers.update(self._headers)
-        r = requests.get(self._server + uri, params=params, headers=headers, verify=False)
+        r = requests.get(self._server + uri, params=params, headers=headers)
         return r
 
     def _post(self, uri, body=None, headers=None):
@@ -73,7 +73,7 @@ class Knufactor:
         headers.update({
             "Content-type": "application/json"
         })
-        r = requests.post(self._server + uri, json=body, headers=headers, verify=False)
+        r = requests.post(self._server + uri, json=body, headers=headers)
         return r
 
     def _put(self, uri, body=None, files=None, headers=None):
@@ -81,7 +81,7 @@ class Knufactor:
             headers = {}
 
         headers.update(self._headers)
-        r = requests.put(self._server + uri, json=body, files=files, headers=headers, verify=False)
+        r = requests.put(self._server + uri, json=body, files=files, headers=headers)
         return r
 
     def _delete(self, uri, body=None, headers=None):
@@ -89,7 +89,7 @@ class Knufactor:
             headers = {}
 
         headers.update(self._headers)
-        r = requests.delete(self._server + uri, json=body, headers=headers, verify=False)
+        r = requests.delete(self._server + uri, json=body, headers=headers)
         return r
 
     def _head(self, uri, headers=None):
@@ -97,7 +97,7 @@ class Knufactor:
             headers = {}
 
         headers.update(self._headers)
-        r = requests.head(self._server + uri, headers=headers, verify=False)
+        r = requests.head(self._server + uri, headers=headers)
         return r
 
     @staticmethod
