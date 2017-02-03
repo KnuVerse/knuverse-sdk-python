@@ -33,7 +33,7 @@ class Knufactor:
         self._headers = {
             "Accept": "application/json",
         }
-        self.version = "1.0.8"
+        self.version = "1.0.9"
 
     # Private Methods
     # ###############
