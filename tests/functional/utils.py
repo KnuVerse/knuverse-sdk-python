@@ -106,11 +106,7 @@ def verify_audiopass(sdk, user, num_words_wrong=0):
     pin and file.  Raises any exception raised.
     """
 
-    ver_rec = sdk.verification_start(
-        user,
-        0, # speed
-        "off" # row doubling
-    )
+    ver_rec = sdk.verification_start(user, verification_speed=0)
 
     anim_words = [
         er['display']
