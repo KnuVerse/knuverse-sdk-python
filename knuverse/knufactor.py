@@ -2,7 +2,9 @@
 Copyright 2014, Intellisis
 All rights reserved.
 """
+from __future__ import print_function
 import os
+import sys
 import re
 import requests
 from functools import wraps
@@ -10,7 +12,6 @@ from datetime import datetime, timedelta
 
 from .data import url
 from . import exceptions as ex
-requests.packages.urllib3.disable_warnings()
 
 
 class Knufactor:
@@ -61,7 +62,7 @@ class Knufactor:
         if not headers:
             headers = {}
         headers.update(self._headers)
-        r = requests.get(self._server + uri, params=params, headers=headers, verify=False)
+        r = requests.get(self._server + uri, params=params, headers=headers)
         return r
 
     def _post(self, uri, body=None, headers=None):
@@ -72,7 +73,7 @@ class Knufactor:
         headers.update({
             "Content-type": "application/json"
         })
-        r = requests.post(self._server + uri, json=body, headers=headers, verify=False)
+        r = requests.post(self._server + uri, json=body, headers=headers)
         return r
 
     def _put(self, uri, body=None, files=None, headers=None):
@@ -80,7 +81,7 @@ class Knufactor:
             headers = {}
 
         headers.update(self._headers)
-        r = requests.put(self._server + uri, json=body, files=files, headers=headers, verify=False)
+        r = requests.put(self._server + uri, json=body, files=files, headers=headers)
         return r
 
     def _delete(self, uri, body=None, headers=None):
@@ -88,7 +89,7 @@ class Knufactor:
             headers = {}
 
         headers.update(self._headers)
-        r = requests.delete(self._server + uri, json=body, headers=headers, verify=False)
+        r = requests.delete(self._server + uri, json=body, headers=headers)
         return r
 
     def _head(self, uri, headers=None):
@@ -96,7 +97,7 @@ class Knufactor:
             headers = {}
 
         headers.update(self._headers)
-        r = requests.head(self._server + uri, headers=headers, verify=False)
+        r = requests.head(self._server + uri, headers=headers)
         return r
 
     @staticmethod
@@ -501,7 +502,7 @@ class Knufactor:
 
         :Args:
             * *client*: (str) Client's Name
-            * *mode*: (str) Enrollment type. Allowed values: "audiopin", "audiopass"
+            * *mode*: (str) DEPRECATED. Presence of PIN is used to determine mode (AudioPass vs AudioPIN)
             * *pin*: (str) Client's PIN. 4 digit string
             * *phone_number*: (str) Phone number to call.
 
@@ -512,7 +513,9 @@ class Knufactor:
         }
 
         if mode:
-            data["mode"] = mode
+            warning_msg = 'WARNING: The "mode" parameter for enrollment_start is DEPRECATED and will be ignored. ' \
+                          'To avoid incompatibility with a future release please stop providing it.'
+            print(warning_msg, file=sys.stderr)
         if pin:
             data["pin"] = pin
         if phone_number:
