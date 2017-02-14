@@ -16,8 +16,10 @@ from . import exceptions as ex
 
 class Knufactor:
     def __init__(self,
-                 apikey,
-                 secret,
+                 apikey=None,
+                 secret=None,
+                 username=None,
+                 password=None,
                  server="https://cloud.knuverse.com",
                  base_uri="/api/v1/"):
 
@@ -28,12 +30,14 @@ class Knufactor:
         self._server = server + base_uri
         self._apikey = apikey
         self._secret = secret
+        self._username = username
+        self._password = password
         self._last_auth = None
         self._auth_token = None
         self._headers = {
             "Accept": "application/json",
         }
-        self.version = "1.0.9"
+        self.version = "1.0.10"
 
     # Private Methods
     # ###############
@@ -168,7 +172,7 @@ class Knufactor:
     # Authentication interfaces
     # =========================
 
-    def auth_refresh(self, apikey=None, secret=None):
+    def auth_refresh(self, apikey=None, secret=None, username=None, password=None):
         """
         Renew authentication token manually.  Uses POST to /auth interface
 
@@ -176,25 +180,36 @@ class Knufactor:
         :type apikey: str or None
         :param secret: The secret password corresponding to the API key.
         :type secret: str or None
+        :param username: Username to use for authentication
+        :type apikey: str or None
+        :param apikey: Password corresponding to username
+        :type apikey: str or None
         :Returns: None
-
         """
-        jwt = self.auth_token(apikey, secret)
+        jwt = self.auth_token(apikey=apikey, secret=secret, username=username, password=password)
         self._headers["Authorization"] = "Bearer %s" % jwt
 
         self._auth_token = jwt
         self._last_auth = datetime.utcnow()
 
-    def auth_token(self, apikey, secret):
+    def auth_token(self, apikey=None, secret=None, username=None, password=None):
         """
         Get authentication token.  Uses POST to /auth interface.
 
         :Returns: (str) Authentication JWT
         """
-        body = {
-            "key_id": apikey or self._apikey,
-            "secret": secret or self._secret
-        }
+        if (apikey and secret) or (self._apikey and self._secret):
+            body = {
+                "key_id": apikey or self._apikey,
+                "secret": secret or self._secret
+            }
+        elif (username and password) or (self._username and self._password):
+            body = {
+                "user" : username or self._username,
+                "password" : password or self._password
+            }
+        else:
+            raise Value("No authentication provided.")
         response = self._post(url.auth, body=body)
 
         self._check_response(response, 200)
