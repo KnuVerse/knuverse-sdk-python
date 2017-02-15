@@ -18,7 +18,7 @@ class Knufactor:
     def __init__(self,
                  apikey=None,
                  secret=None,
-                 username=None,
+                 email=None,
                  password=None,
                  server="https://cloud.knuverse.com",
                  base_uri="/api/v1/"):
@@ -30,7 +30,7 @@ class Knufactor:
         self._server = server + base_uri
         self._apikey = apikey
         self._secret = secret
-        self._username = username
+        self._email = email
         self._password = password
         self._last_auth = None
         self._auth_token = None
@@ -172,7 +172,7 @@ class Knufactor:
     # Authentication interfaces
     # =========================
 
-    def auth_refresh(self, apikey=None, secret=None, username=None, password=None):
+    def auth_refresh(self, apikey=None, secret=None, email=None, password=None):
         """
         Renew authentication token manually.  Uses POST to /auth interface
 
@@ -180,19 +180,19 @@ class Knufactor:
         :type apikey: str or None
         :param secret: The secret password corresponding to the API key.
         :type secret: str or None
-        :param username: Username to use for authentication
+        :param email: Email to use for authentication
         :type apikey: str or None
-        :param apikey: Password corresponding to username
+        :param apikey: Password corresponding to email
         :type apikey: str or None
         :Returns: None
         """
-        jwt = self.auth_token(apikey=apikey, secret=secret, username=username, password=password)
+        jwt = self.auth_token(apikey=apikey, secret=secret, email=email, password=password)
         self._headers["Authorization"] = "Bearer %s" % jwt
 
         self._auth_token = jwt
         self._last_auth = datetime.utcnow()
 
-    def auth_token(self, apikey=None, secret=None, username=None, password=None):
+    def auth_token(self, apikey=None, secret=None, email=None, password=None):
         """
         Get authentication token.  Uses POST to /auth interface.
 
@@ -203,9 +203,9 @@ class Knufactor:
                 "key_id": apikey or self._apikey,
                 "secret": secret or self._secret
             }
-        elif (username and password) or (self._username and self._password):
+        elif (email and password) or (self._email and self._password):
             body = {
-                "user" : username or self._username,
+                "user" : email or self._email,
                 "password" : password or self._password
             }
         else:
