@@ -189,6 +189,16 @@ class Knufactor:
         jwt = self.auth_token(apikey=apikey, secret=secret, email=email, password=password)
         self._headers["Authorization"] = "Bearer %s" % jwt
 
+        if password:
+            self._password = password
+        elif secret:
+            self._secret = secret
+
+        if email:
+            self._email = email
+        elif apikey:
+            self._apikey = apikey
+
         self._auth_token = jwt
         self._last_auth = datetime.utcnow()
 
@@ -198,15 +208,26 @@ class Knufactor:
 
         :Returns: (str) Authentication JWT
         """
-        if (apikey and secret) or (self._apikey and self._secret):
+        # Check for passed in credentials first
+        if apikey and secret:
             body = {
-                "key_id": apikey or self._apikey,
-                "secret": secret or self._secret
+                "key_id": apikey,
+                "secret": secret
             }
-        elif (email and password) or (self._email and self._password):
+        elif email and password:
             body = {
-                "user" : email or self._email,
-                "password" : password or self._password
+                "user" : email,
+                "password" : password
+            }
+        elif self._apikey and self._secret:
+            body = {
+                "key_id": self._apikey,
+                "secret": self._secret
+            }
+        elif self._email and self._password:
+            body = {
+                "user" : self._email,
+                "password" : self._password
             }
         else:
             raise Value("No authentication provided.")
