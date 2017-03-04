@@ -23,8 +23,8 @@ Then, in a Python file:
 from knuverse.knufactor import Knufactor
 
 api = Knufactor(
-    <api_key>,
-    <secret>
+    apikey=<api_key>,
+    secret=<secret>
 )
 for client in api.client_list():
     print "%s: %s" % (client.get("name"), client.get("state"))
